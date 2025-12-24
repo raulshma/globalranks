@@ -2,8 +2,8 @@ import { createRouter } from '@tanstack/react-router'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
-import type { RouterContext } from './routes/__root'
 import { CACHE_CONFIG } from './lib/cache-config'
+import type { RouterContext } from './routes/__root'
 
 // Re-export for backwards compatibility
 export { CACHE_CONFIG }

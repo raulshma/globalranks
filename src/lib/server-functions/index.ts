@@ -69,3 +69,10 @@ export type { RankingsQueryParams, RankingsApiResponse } from './api-rankings'
 
 export { exportRankingsData } from './api-export'
 export type { ExportFormat, ExportRequest, ExportResponse } from './api-export'
+
+export { getAllLatestRankingsForCountry } from './country-rankings'
+export type {
+  LatestIndexRanking,
+  DomainRankingGroup,
+  CountryRankingsPageData,
+} from './country-rankings'

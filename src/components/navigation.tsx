@@ -7,6 +7,7 @@ import {
   IconChartLine,
   IconGitCompare,
   IconHome,
+  IconList,
   IconMenu2,
   IconStack2,
   IconX,
@@ -22,6 +23,7 @@ interface NavItem {
 
 const navItems: Array<NavItem> = [
   { href: "/", label: "Dashboard", icon: <IconHome className="size-4" /> },
+  { href: "/country", label: "All Rankings", icon: <IconList className="size-4" /> },
   { href: "/rankings", label: "Rankings", icon: <IconChartBar className="size-4" /> },
   { href: "/compare", label: "Compare", icon: <IconGitCompare className="size-4" /> },
   { href: "/trends", label: "Trends", icon: <IconChartLine className="size-4" /> },

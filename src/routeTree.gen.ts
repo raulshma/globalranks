@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as CustomIndexRouteImport } from './routes/custom-index'
 import { Route as TrendsRouteImport } from './routes/trends'
+import { Route as CountryRouteImport } from './routes/country'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RankingsIndexRouteImport } from './routes/rankings/index'
@@ -25,6 +26,11 @@ const CustomIndexRoute = CustomIndexRouteImport.update({
 const TrendsRoute = TrendsRouteImport.update({
   id: '/trends',
   path: '/trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CountryRoute = CountryRouteImport.update({
+  id: '/country',
+  path: '/country',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompareRoute = CompareRouteImport.update({
@@ -56,6 +62,7 @@ const RankingsDomainIndexIdRoute = RankingsDomainIndexIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/compare': typeof CompareRoute
+  '/country': typeof CountryRoute
   '/custom-index': typeof CustomIndexRoute
   '/trends': typeof TrendsRoute
   '/rankings': typeof RankingsIndexRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/compare': typeof CompareRoute
+  '/country': typeof CountryRoute
   '/custom-index': typeof CustomIndexRoute
   '/trends': typeof TrendsRoute
   '/rankings': typeof RankingsIndexRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/compare': typeof CompareRoute
+  '/country': typeof CountryRoute
   '/custom-index': typeof CustomIndexRoute
   '/trends': typeof TrendsRoute
   '/rankings/': typeof RankingsIndexRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/compare'
+    | '/country'
     | '/custom-index'
     | '/trends'
     | '/rankings'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/compare'
+    | '/country'
     | '/custom-index'
     | '/trends'
     | '/rankings'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/compare'
+    | '/country'
     | '/custom-index'
     | '/trends'
     | '/rankings/'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CompareRoute: typeof CompareRoute
+  CountryRoute: typeof CountryRoute
   CustomIndexRoute: typeof CustomIndexRoute
   TrendsRoute: typeof TrendsRoute
   RankingsIndexRoute: typeof RankingsIndexRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/trends'
       fullPath: '/trends'
       preLoaderRoute: typeof TrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/country': {
+      id: '/country'
+      path: '/country'
+      fullPath: '/country'
+      preLoaderRoute: typeof CountryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compare': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CompareRoute: CompareRoute,
+  CountryRoute: CountryRoute,
   CustomIndexRoute: CustomIndexRoute,
   TrendsRoute: TrendsRoute,
   RankingsIndexRoute: RankingsIndexRoute,

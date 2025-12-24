@@ -132,7 +132,7 @@ export function CountrySelector({ countries, selectedCountry }: CountrySelectorP
         localStorage.setItem(STORAGE_KEY, value)
         void navigate({
           to: ".",
-          search: { country: value },
+          search: (prev: Record<string, unknown>) => ({ ...prev, country: value }),
         })
       }
     },
