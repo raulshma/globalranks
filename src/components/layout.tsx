@@ -69,7 +69,7 @@ export function Layout({ children, countries, selectedCountry }: LayoutProps) {
         </header>
         <main 
           id="main-content" 
-          className="container mx-auto px-4 py-4 sm:py-6"
+          className="w-full h-full relative z-10 py-4 sm:py-6"
           role="main"
           tabIndex={-1}
         >

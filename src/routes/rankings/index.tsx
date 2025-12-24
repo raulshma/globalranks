@@ -58,16 +58,15 @@ function RankingsPage() {
   const data = Route.useLoaderData()
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 container-wide relative z-10">
       <div>
-        <h1 className="text-2xl font-bold">Rankings by Domain</h1>
-        <p className="text-muted-foreground text-sm">
-          Explore rankings across {data.domains.length} domains for{" "}
-          {data.latestYear}
+        <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Rankings_</h1>
+        <p className="text-muted-foreground font-mono text-sm border-l-4 border-primary pl-4">
+          :: Global standing across {data.domains.length} analytical domains for {data.latestYear}
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-12">
         {data.domains.map((domain) => (
           <DomainSection key={domain.id} domain={domain} />
         ))}
@@ -128,29 +127,29 @@ function DomainSection({ domain }: DomainSectionProps) {
   const { stats, rankings } = domain
 
   return (
-    <Card>
-      <CardHeader className="pb-4">
+    <Card className="border-2 border-border shadow-hard">
+      <CardHeader className="pb-4 border-b-2 border-border bg-muted/5">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">{domain.icon}</span>
+            <span className="text-3xl filter grayscale hover:grayscale-0 transition-all">{domain.icon}</span>
             <div>
-              <CardTitle className="text-lg">{domain.name}</CardTitle>
-              <p className="text-muted-foreground text-sm">
-                {domain.description}
+              <CardTitle className="text-xl font-black uppercase tracking-tight">{domain.name}</CardTitle>
+              <p className="text-muted-foreground font-mono text-xs">
+                // {domain.description}
               </p>
             </div>
           </div>
           <a
             href={`/rankings/${domain.id}`}
-            className="flex items-center gap-1 text-xs text-primary hover:underline"
+            className="flex items-center gap-1 text-xs font-bold uppercase text-primary hover:underline bg-primary/10 px-2 py-1"
           >
-            View all
+            Explore All
             <IconChevronRight className="size-3" />
           </a>
         </div>
 
         {/* Domain Stats */}
-        <div className="mt-4 flex flex-wrap gap-4">
+        <div className="mt-6 flex flex-wrap gap-6">
           <StatBadge label="Indices" value={stats.rankedIndices.toString()} />
           <StatBadge
             label="Avg. Percentile"
@@ -174,12 +173,12 @@ function DomainSection({ domain }: DomainSectionProps) {
         </div>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="pt-6">
         {rankings.length > 0 ? (
-          <div className="space-y-2">
+          <div className="space-y-6">
             {/* Best and Worst Highlights */}
             {stats.bestIndex && stats.worstIndex && (
-              <div className="mb-4 grid gap-3 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <HighlightCard
                   type="best"
                   index={stats.bestIndex}
@@ -194,43 +193,43 @@ function DomainSection({ domain }: DomainSectionProps) {
             )}
 
             {/* Rankings Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto scrollbar-none">
+              <table className="w-full text-sm font-mono">
                 <thead>
-                  <tr className="border-b border-border text-left">
-                    <th className="pb-2 font-medium">Index</th>
-                    <th className="pb-2 text-right font-medium">Rank</th>
-                    <th className="pb-2 text-right font-medium">Percentile</th>
-                    <th className="pb-2 text-right font-medium">Change</th>
+                  <tr className="border-b-2 border-border border-dashed text-left">
+                    <th className="pb-3 font-bold uppercase tracking-wider">Index</th>
+                    <th className="pb-3 text-right font-bold uppercase tracking-wider">Rank</th>
+                    <th className="pb-3 text-right font-bold uppercase tracking-wider">Percentile</th>
+                    <th className="pb-3 text-right font-bold uppercase tracking-wider">Change</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-border/50 divide-dashed">
                   {rankings.map((ranking) => (
                     <tr
                       key={ranking.indexId}
-                      className="border-b border-border last:border-0"
+                      className="group hover:bg-muted/30 transition-colors"
                     >
-                      <td className="py-2">
+                      <td className="py-4">
                         <a
                           href={`/rankings/${domain.id}/${ranking.indexId}`}
-                          className="hover:text-primary hover:underline"
+                          className="font-bold text-sm block group-hover:text-primary transition-colors"
                         >
                           {ranking.indexName}
                         </a>
-                        <p className="text-muted-foreground text-xs">
+                        <span className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none">
                           {ranking.source}
-                        </p>
+                        </span>
                       </td>
-                      <td className="py-2 text-right">
-                        <span className="font-medium">{ranking.rank}</span>
-                        <span className="text-muted-foreground">
+                      <td className="py-4 text-right">
+                        <span className="font-black text-sm">{ranking.rank}</span>
+                        <span className="text-muted-foreground text-[10px] ml-0.5">
                           /{ranking.totalCountries}
                         </span>
                       </td>
-                      <td className="py-2 text-right">
+                      <td className="py-4 text-right">
                         <PercentileBadge percentile={ranking.percentile} />
                       </td>
-                      <td className="py-2 text-right">
+                      <td className="py-4 text-right">
                         <RankChangeIndicator
                           change={ranking.rankChange}
                           previousRank={ranking.previousRank}
@@ -243,8 +242,8 @@ function DomainSection({ domain }: DomainSectionProps) {
             </div>
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm">
-            No ranking data available for this domain
+          <p className="text-muted-foreground text-sm font-mono py-8 text-center border-2 border-dashed border-border/20">
+            // No ranking data available for this domain
           </p>
         )}
       </CardContent>

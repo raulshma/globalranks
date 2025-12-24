@@ -117,28 +117,28 @@ function IndexDetailPage() {
   const { index, selectedCountry, fullRankingList, milestones } = data
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 container-wide relative z-10">
       {/* Header */}
       <div>
-        <div className="mb-2 flex items-center gap-2">
+        <div className="mb-4 flex items-center gap-2">
           <a
             href={`/rankings/${params.domain}`}
-            className="flex items-center gap-1 text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary"
           >
-            <IconChevronLeft className="size-4" />
-            <span className="text-sm">{index.domain.name}</span>
+            <IconChevronLeft className="size-3" />
+            {index.domain.name}_INDICES
           </a>
         </div>
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">{index.name}</h1>
-            <p className="text-muted-foreground text-sm">{index.shortName}</p>
+            <h1 className="text-4xl font-black uppercase tracking-tighter mb-1">{index.name}_</h1>
+            <p className="text-muted-foreground font-mono text-sm border-l-4 border-primary pl-4">// {index.shortName}</p>
           </div>
           <a
             href={index.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-sm text-primary hover:underline"
+            className="flex items-center gap-2 text-xs font-bold uppercase text-primary hover:underline bg-primary/10 px-3 py-2"
           >
             {index.source}
             <IconExternalLink className="size-4" />
@@ -336,54 +336,66 @@ function IndexDetailPage() {
       )}
 
       {/* Full Ranking List */}
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="text-base">
-            Full Ranking List ({data.selectedYear})
+      <Card className="border-2 border-border shadow-hard">
+        <CardHeader className="border-b-2 border-border bg-muted/5">
+          <CardTitle className="text-xl font-black uppercase tracking-tight">
+            Global Leaderboard_{data.selectedYear}
           </CardTitle>
+          <p className="text-muted-foreground font-mono text-xs">// Complete international standing for this index</p>
         </CardHeader>
-        <CardContent>
-          <div className="max-h-96 overflow-y-auto">
-            <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-card">
-                <tr className="border-b border-border text-left">
-                  <th className="pb-2 font-medium">Rank</th>
-                  <th className="pb-2 font-medium">Country</th>
-                  <th className="pb-2 font-medium">Region</th>
-                  <th className="pb-2 text-right font-medium">Score</th>
-                  <th className="pb-2 text-right font-medium">Percentile</th>
+        <CardContent className="pt-6">
+          <div className="overflow-x-auto scrollbar-none">
+            <table className="w-full text-sm font-mono">
+              <thead>
+                <tr className="border-b-2 border-border border-dashed text-left">
+                  <th className="pb-3 font-black uppercase tracking-wider">Rank</th>
+                  <th className="pb-3 font-black uppercase tracking-wider">Country</th>
+                  <th className="pb-3 font-black uppercase tracking-wider">Region</th>
+                  <th className="pb-3 text-right font-black uppercase tracking-wider">Score</th>
+                  <th className="pb-3 text-right font-black uppercase tracking-wider">Percentile</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-border/50 divide-dashed">
                 {fullRankingList.map((entry) => (
                   <tr
                     key={entry.countryCode}
                     className={cn(
-                      "border-b border-border last:border-0",
-                      entry.isSelected && "bg-primary/10 font-medium"
+                      "group transition-colors hover:bg-muted/30",
+                      entry.isSelected && "bg-primary/5 ring-1 ring-inset ring-primary/20"
                     )}
                   >
-                    <td className="py-2">{entry.rank}</td>
-                    <td className="py-2">
-                      {entry.countryName}
-                      {entry.isSelected && (
-                        <Badge variant="secondary" className="ml-2 text-xs">
-                          Selected
-                        </Badge>
-                      )}
+                    <td className="py-3">
+                      <span className={cn(
+                        "font-black text-sm px-1",
+                        entry.isSelected && "bg-primary text-white"
+                      )}>
+                        {entry.rank}
+                      </span>
                     </td>
-                    <td className="py-2 text-muted-foreground">
+                    <td className="py-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold">{entry.countryName}</span>
+                        {entry.isSelected && (
+                          <span className="text-[10px] font-black uppercase tracking-tighter text-primary animate-pulse">
+                            [SELECTED]
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="py-3 text-[10px] text-muted-foreground uppercase tracking-widest">
                       {entry.region}
                     </td>
-                    <td className="py-2 text-right">
-                      {entry.score !== null
-                        ? entry.score.toFixed(1)
-                        : entry.normalizedScore !== null
-                          ? entry.normalizedScore.toFixed(0)
-                          : "—"}
+                    <td className="py-3 text-right">
+                      <span className="font-bold">
+                        {entry.score !== null
+                          ? entry.score.toFixed(1)
+                          : entry.normalizedScore !== null
+                            ? entry.normalizedScore.toFixed(0)
+                            : "—"}
+                      </span>
                     </td>
-                    <td className="py-2 text-right">
-                      {entry.percentile.toFixed(0)}%
+                    <td className="py-3 text-right">
+                      <PercentileBadge percentile={entry.percentile} />
                     </td>
                   </tr>
                 ))}
@@ -467,6 +479,23 @@ function YearSelector({
         ))}
       </SelectContent>
     </Select>
+  )
+}
+
+function PercentileBadge({ percentile }: { percentile: number }) {
+  const variant =
+    percentile >= 75
+      ? "default"
+      : percentile >= 50
+        ? "secondary"
+        : percentile >= 25
+          ? "outline"
+          : "destructive"
+
+  return (
+    <Badge variant={variant} className="text-[10px] font-black uppercase tracking-tighter rounded-none">
+      {percentile.toFixed(0)}%
+    </Badge>
   )
 }
 
