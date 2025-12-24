@@ -11,3 +11,11 @@ count.txt
 .output
 .vinxi
 todos.json
+
+# Local SQLite database
+local.db
+local.db-shm
+local.db-wal
+
+# Drizzle
+drizzle/
