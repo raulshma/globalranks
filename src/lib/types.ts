@@ -1,5 +1,5 @@
 /**
- * Core TypeScript types for the India Rankings Platform
+ * Core TypeScript types for the Global Rankings Platform
  * Requirements: 1.3, 1.7, 2.4
  */
 

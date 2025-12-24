@@ -1,5 +1,5 @@
 /**
- * Sitemap generation script for India Ranks
+ * Sitemap generation script for Global Indicies
  * Run with: npx tsx scripts/generate-sitemap.ts
  */
 
@@ -8,7 +8,7 @@ import * as path from "node:path"
 import { db } from "../src/lib/db"
 import { domains, rankingIndices } from "../src/lib/db/schema"
 
-const BASE_URL = process.env.SITE_URL ?? "https://indiaranks.com"
+const BASE_URL = process.env.SITE_URL ?? "https://globalranks.vercel.app"
 
 interface SitemapUrl {
   loc: string
@@ -65,7 +65,7 @@ async function generateSitemap() {
   console.log(`Total URLs: ${urls.length}`)
 
   // Generate robots.txt
-  const robotsTxt = `# Robots.txt for India Ranks
+  const robotsTxt = `# Robots.txt for Global Indicies
 User-agent: *
 Allow: /
 

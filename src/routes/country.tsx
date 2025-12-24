@@ -50,7 +50,7 @@ export const Route = createFileRoute("/country")({
     return {
       meta: [
         {
-          title: `All Rankings — ${countryName} — India Ranks`,
+          title: `All Rankings — ${countryName} — Global Indicies`,
         },
         {
           name: "description",
@@ -150,14 +150,7 @@ function CountryRankingsPage() {
       {/* Screen reader announcements for filter changes */}
       <SROnly aria-live="polite">{announcement}</SROnly>
 
-      {/* Page Header - Responsive text sizing */}
-      <header>
-        <h1 className="text-xl sm:text-2xl font-bold">All Rankings</h1>
-        <p className="text-muted-foreground text-xs sm:text-sm">
-          {data.countryName} — {data.indicesWithData} of {data.totalIndices}{" "}
-          indices with data
-        </p>
-      </header>
+
 
       {/* Summary Stats - Responsive grid */}
       <div 

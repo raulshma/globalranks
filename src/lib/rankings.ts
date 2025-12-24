@@ -1,5 +1,5 @@
 /**
- * Rankings utility functions for the India Rankings Platform
+ * Rankings utility functions for the Global Rankings Platform
  * Requirements: 1.2, 2.4
  */
 

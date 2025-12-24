@@ -1,6 +1,6 @@
 /**
  * Seed Data Index
- * Exports all seed data for the India Rankings Platform
+ * Exports all seed data for the Global Rankings Platform
  */
 
 export { countriesData } from './countries'

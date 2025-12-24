@@ -26,7 +26,7 @@ interface CountrySelectorProps {
   selectedCountry: string
 }
 
-const STORAGE_KEY = "india-ranks-selected-country"
+const STORAGE_KEY = "global-indicies-selected-country"
 const DEFAULT_COUNTRY = "IND"
 
 /**

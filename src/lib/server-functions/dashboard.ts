@@ -11,7 +11,7 @@ import { domains, rankingEntries } from "../db/schema"
 
 /**
  * Get dashboard overview data for a country
- * Requirement 2.1: Default to India as selected country
+ * Requirement 2.1: Default to IND as selected country
  * Requirement 3.3: Show domain-level aggregate scores and trends
  * 
  * Uses each index's latest available data rather than filtering to a single year

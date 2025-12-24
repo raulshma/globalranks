@@ -33,26 +33,26 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "India Ranks — Global Rankings Intelligence Platform",
+        title: "Global Indicies — Global Rankings Intelligence Platform",
       },
       {
         name: "description",
         content:
-          "Track and analyze India's position across global ranking indices. Compare with peer nations, explore trends, and build custom composite indices.",
+          "Track and analyze global ranking indices. Compare countries, explore trends, and build custom composite indices.",
       },
       {
         name: "keywords",
         content:
-          "India rankings, global indices, country comparison, HDI, GDP, innovation index, world rankings, international rankings",
+          "global rankings, country indices, country comparison, HDI, GDP, innovation index, world rankings, international rankings",
       },
       {
         property: "og:title",
-        content: "India Ranks — Global Rankings Intelligence Platform",
+        content: "Global Indicies — Global Rankings Intelligence Platform",
       },
       {
         property: "og:description",
         content:
-          "Track and analyze India's position across global ranking indices. Compare with peer nations, explore trends, and build custom composite indices.",
+          "Track and analyze global ranking indices. Compare countries, explore trends, and build custom composite indices.",
       },
       {
         property: "og:type",
@@ -64,12 +64,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
       {
         name: "twitter:title",
-        content: "India Ranks — Global Rankings Intelligence Platform",
+        content: "Global Indicies — Global Rankings Intelligence Platform",
       },
       {
         name: "twitter:description",
         content:
-          "Track and analyze India's position across global ranking indices. Compare with peer nations, explore trends, and build custom composite indices.",
+          "Track and analyze global ranking indices. Compare countries, explore trends, and build custom composite indices.",
       },
       // Theme color for mobile browsers
       {
@@ -107,7 +107,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
       {
         rel: "canonical",
-        href: "https://indiaranks.com",
+        href: "https://globalranks.vercel.app",
       },
       // Preconnect to font origins for faster loading
       {
@@ -182,7 +182,7 @@ function RootComponent() {
   const selectedCountry = search.country ?? DEFAULT_COUNTRY
 
   return (
-    <ThemeProvider defaultTheme="system" storageKey="india-ranks-theme">
+    <ThemeProvider defaultTheme="system" storageKey="global-indicies-theme">
       <Layout countries={countries} selectedCountry={selectedCountry}>
         <Outlet />
       </Layout>

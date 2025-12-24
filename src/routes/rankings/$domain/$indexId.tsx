@@ -60,7 +60,7 @@ export const Route = createFileRoute("/rankings/$domain/$indexId")({
           indexDescription: methodology,
           source,
           sourceUrl,
-          countryName: "India",
+          countryName: loaderData.fullRankingList.find(e => e.isSelected)?.countryName ?? "Selected Country",
           rank: entry.rank,
           totalCountries: entry.totalCountries,
           year,
@@ -70,12 +70,12 @@ export const Route = createFileRoute("/rankings/$domain/$indexId")({
       : null
 
     const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-      { name: "Home", url: "https://indiaranks.com" },
-      { name: "Rankings", url: "https://indiaranks.com/rankings" },
-      { name: domainName, url: `https://indiaranks.com/rankings/${params.domain}` },
+      { name: "Home", url: "https://globalranks.vercel.app" },
+      { name: "Rankings", url: "https://globalranks.vercel.app/rankings" },
+      { name: domainName, url: `https://globalranks.vercel.app/rankings/${params.domain}` },
       {
         name: indexShortName || indexName,
-        url: `https://indiaranks.com/rankings/${params.domain}/${params.indexId}`,
+        url: `https://globalranks.vercel.app/rankings/${params.domain}/${params.indexId}`,
       },
     ])
 
@@ -86,7 +86,7 @@ export const Route = createFileRoute("/rankings/$domain/$indexId")({
     return {
       meta: [
         {
-          title: `${indexName} ${year} — India Ranks`,
+          title: `${indexName} ${year} — Global Indicies`,
         },
         {
           name: "description",
@@ -213,9 +213,8 @@ function IndexDetailPage() {
 
   return (
     <div className="space-y-8 container-wide relative z-10">
-      {/* Header */}
-      <div>
-        <div className="mb-4 flex items-center gap-2">
+      <div className="mb-8 flex items-center justify-between">
+        <div className="flex items-center gap-2">
           <a
             href={`/rankings/${params.domain}`}
             className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary"
@@ -224,21 +223,15 @@ function IndexDetailPage() {
             {index.domain.name}_INDICES
           </a>
         </div>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-black uppercase tracking-tighter mb-1">{index.name}_</h1>
-            <p className="text-muted-foreground font-mono text-sm border-l-4 border-primary pl-4">// {index.shortName}</p>
-          </div>
-          <a
-            href={index.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs font-bold uppercase text-primary hover:underline bg-primary/10 px-3 py-2"
-          >
-            {index.source}
-            <IconExternalLink className="size-4" />
-          </a>
-        </div>
+        <a
+          href={index.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-xs font-bold uppercase text-primary hover:underline bg-primary/10 px-3 py-2"
+        >
+          {index.source}
+          <IconExternalLink className="size-4" />
+        </a>
       </div>
 
       {/* Year Selector and Selected Country Stats */}

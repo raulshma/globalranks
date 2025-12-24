@@ -45,9 +45,9 @@ export function Layout({ children, countries, selectedCountry }: LayoutProps) {
         >
           <div className="container mx-auto flex h-14 items-center justify-between px-4">
             <div className="flex items-center gap-4 md:gap-6">
-              <Link to="/" className="flex items-center gap-2" aria-label="India Ranks Home">
+              <Link to="/" className="flex items-center gap-2" aria-label="Global Indicies Home">
                 <IconChartBar className="size-5 text-primary" aria-hidden="true" />
-                <span className="font-bold text-sm tracking-tighter uppercase">India Ranks</span>
+                <span className="font-bold text-sm tracking-tighter uppercase">Global Indicies</span>
               </Link>
               <Navigation 
                 isMobileMenuOpen={isMobileMenuOpen}
@@ -81,7 +81,7 @@ export function Layout({ children, countries, selectedCountry }: LayoutProps) {
         >
           <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
             <p>
-              India Ranks — Tracking India's position across global indices
+              Global Indicies — Tracking country positions across global indices
             </p>
           </div>
         </footer>

@@ -96,7 +96,7 @@ export const Route = createFileRoute("/custom-index")({
     return {
       meta: [
         {
-          title: "Custom Index Builder — India Ranks",
+          title: "Custom Index Builder — Global Indicies",
         },
         {
           name: "description",
@@ -104,7 +104,7 @@ export const Route = createFileRoute("/custom-index")({
         },
         {
           property: "og:title",
-          content: "Custom Index Builder — India Ranks",
+          content: "Custom Index Builder — Global Indicies",
         },
         {
           property: "og:description",
@@ -160,13 +160,7 @@ function CustomIndexPage() {
 
   return (
     <div className="space-y-8 container mx-auto px-4 relative z-10">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Custom Index Builder</h1>
-          <p className="text-muted-foreground text-sm">
-            Create weighted composite indices from multiple ranking sources
-          </p>
-        </div>
+      <div className="flex justify-end">
         <Button
           variant={showBuilder ? "outline" : "default"}
           onClick={() => setShowBuilder(!showBuilder)}

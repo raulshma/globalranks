@@ -1,7 +1,7 @@
 {
-  "short_name": "India Ranks",
-  "name": "India Ranks — Global Rankings Intelligence Platform",
-  "description": "Track and analyze India's position across global ranking indices. Compare with peer nations, explore trends, and build custom composite indices.",
+  "short_name": "Global Indicies",
+  "name": "Global Indicies — Global Rankings Intelligence Platform",
+  "description": "Track and analyze global ranking indices. Compare countries, explore trends, and build custom composite indices.",
   "icons": [
     {
       "src": "favicon.ico",

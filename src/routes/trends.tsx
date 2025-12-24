@@ -90,7 +90,7 @@ export const Route = createFileRoute("/trends")({
     return {
       meta: [
         {
-          title: "Trends Analysis — India Ranks",
+          title: "Trends Analysis — Global Indicies",
         },
         {
           name: "description",
@@ -98,7 +98,7 @@ export const Route = createFileRoute("/trends")({
         },
         {
           property: "og:title",
-          content: "Trends Analysis — India Ranks",
+          content: "Trends Analysis — Global Indicies",
         },
         {
           property: "og:description",
@@ -266,12 +266,7 @@ function TrendsPage() {
 
   return (
     <div className="space-y-8 container mx-auto px-4 relative z-10">
-      <div>
-        <h1 className="text-2xl font-bold">Trends Analysis</h1>
-        <p className="text-muted-foreground text-sm">
-          Track ranking changes over time and identify significant movements
-        </p>
-      </div>
+
 
       {/* Selection Controls */}
       <Card>

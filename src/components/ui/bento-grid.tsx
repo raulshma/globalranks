@@ -38,7 +38,7 @@ export const BentoItem = ({
   return (
     <div
       className={cn(
-        "row-span-1 border border-white/10 bg-card/40 backdrop-blur-2xl text-card-foreground group/bento shadow-soft hover:shadow-soft-lg rounded-3xl transition-all duration-300 justify-between flex flex-col space-y-4 p-6 hover:-translate-y-1",
+        "row-span-1 border border-white/10 bg-card/40 backdrop-blur-2xl text-card-foreground group/bento shadow-soft hover:shadow-soft-lg rounded-3xl transition-all duration-300 justify-between flex flex-col space-y-4 p-8 hover:-translate-y-1",
         className
       )}
     >

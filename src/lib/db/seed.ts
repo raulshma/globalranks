@@ -1,5 +1,5 @@
 /**
- * Seed script for India Global Rankings Intelligence Platform
+ * Seed script for Global Rankings Intelligence Platform
  * Uses modular data files from seed-data/ directory
  */
 

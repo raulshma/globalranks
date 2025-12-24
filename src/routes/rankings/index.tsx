@@ -34,7 +34,7 @@ export const Route = createFileRoute("/rankings/")({
     return {
       meta: [
         {
-          title: `Global Rankings by Domain ${year} — India Ranks`,
+          title: `Global Rankings by Domain ${year} — Global Indicies`,
         },
         {
           name: "description",
@@ -59,12 +59,7 @@ function RankingsPage() {
 
   return (
     <div className="space-y-8 container mx-auto px-4 relative z-10">
-      <div>
-        <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Rankings_</h1>
-        <p className="text-muted-foreground font-mono text-sm border-l-4 border-primary pl-4">
-          :: Global standing across {data.domains.length} analytical domains for {data.latestYear}
-        </p>
-      </div>
+
 
       <div className="space-y-12">
         {data.domains.map((domain) => (

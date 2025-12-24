@@ -41,20 +41,20 @@ export const Route = createFileRoute("/rankings/$domain/")({
           domainName,
           domainDescription,
           indicesCount,
-          countryName: "India",
+          countryName: "Selected Country",
         })
       : null
 
     const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-      { name: "Home", url: "https://indiaranks.com" },
-      { name: "Rankings", url: "https://indiaranks.com/rankings" },
-      { name: domainName, url: `https://indiaranks.com/rankings/${params.domain}` },
+      { name: "Home", url: "https://globalranks.vercel.app" },
+      { name: "Rankings", url: "https://globalranks.vercel.app/rankings" },
+      { name: domainName, url: `https://globalranks.vercel.app/rankings/${params.domain}` },
     ])
 
     return {
       meta: [
         {
-          title: `${domainName} Rankings ${year} — India Ranks`,
+          title: `${domainName} Rankings ${year} — Global Indicies`,
         },
         {
           name: "description",
@@ -86,28 +86,14 @@ function DomainDetailPage() {
 
   return (
     <div className="space-y-8 container-wide relative z-10">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="mb-4 flex items-center gap-2">
-            <a
-              href="/rankings"
-              className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary"
-            >
-              <IconChevronLeft className="size-4" />
-              All Domain Indices
-            </a>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-5xl filter grayscale hover:grayscale-0 transition-all">{domain.icon}</span>
-            <div>
-              <h1 className="text-4xl font-black uppercase tracking-tighter mb-1">{domain.name}_</h1>
-              <p className="text-muted-foreground font-mono text-sm border-l-4 border-primary pl-4">
-                :: {domain.description}
-              </p>
-            </div>
-          </div>
-        </div>
+      <div className="mb-8">
+        <a
+          href="/rankings"
+          className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary w-fit"
+        >
+          <IconChevronLeft className="size-4" />
+          All Domain Indices
+        </a>
       </div>
 
       {/* Stats Overview */}

@@ -142,15 +142,15 @@ export function generateWebsiteJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "India Ranks",
+    name: "Global Indicies",
     description:
-      "Track and analyze India's position across global ranking indices. Compare with peer nations, explore trends, and build custom composite indices.",
-    url: "https://indiaranks.com",
+      "Track and analyze global ranking indices. Compare countries, explore trends, and build custom composite indices.",
+    url: "https://globalranks.vercel.app",
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://indiaranks.com/rankings?search={search_term_string}",
+        urlTemplate: "https://globalranks.vercel.app/rankings?search={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },

@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
     return {
       meta: [
         {
-          title: `Global Rankings Dashboard — India Ranks`,
+          title: `Global Rankings Dashboard — Global Indicies`,
         },
         {
           name: "description",
@@ -58,15 +58,10 @@ function HomePage() {
 
   return (
     <div className="space-y-8 container mx-auto px-4 relative z-10">
-      <div>
-        <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Dashboard_</h1>
-        <p className="text-muted-foreground font-mono text-sm border-l-4 border-primary pl-4">
-          :: Overview of global rankings using latest available data
-        </p>
-      </div>
+
 
       {/* Summary Stats - Bento Row 1 */}
-      <BentoGrid className="md:auto-rows-[10rem]">
+      <BentoGrid className="md:auto-rows-[12rem]">
         <BentoItem
           title="Total Indices"
           description="Tracked globally"
@@ -186,24 +181,33 @@ function HomePage() {
                 description={`${summary.totalIndices} Indices`}
                 className={i === 0 || i === 3 ? "md:col-span-2 bg-muted/10" : "md:col-span-1"}
                 icon={<span className="text-2xl mb-2 block">{summary.domain.icon}</span>}
-                header={
-                   <div className="mt-auto pt-4 border-t border-white/10 w-full">
-                       <div className="flex justify-between items-end">
-                           <div>
-                               <div className="text-xs text-muted-foreground font-bold uppercase">Avg Percentile</div>
-                               <div className="text-2xl font-black">{summary.avgPercentile.toFixed(0)}%</div>
-                           </div>
-                           <div className={cn(
-                               "text-xl font-bold flex items-center gap-1",
-                               summary.avgRankChange > 0 ? "text-green-600" : "text-red-500"
-                           )}>
-                               {summary.avgRankChange > 0 ? "↑" : "↓"} {Math.abs(summary.avgRankChange).toFixed(1)}
-                           </div>
-                       </div>
-                   </div> 
-                }
               >
-                 <a href={`/rankings/${summary.domain.id}`} className="absolute inset-0 z-10" aria-label={`View ${summary.domain.name} rankings`} />
+                <div className="mt-auto pt-4 border-t border-white/10 w-full">
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <div className="text-xs text-muted-foreground font-bold uppercase">
+                        Avg Percentile
+                      </div>
+                      <div className="text-2xl font-black">
+                        {summary.avgPercentile.toFixed(0)}%
+                      </div>
+                    </div>
+                    <div
+                      className={cn(
+                        "text-xl font-bold flex items-center gap-1",
+                        summary.avgRankChange > 0 ? "text-green-600" : "text-red-500"
+                      )}
+                    >
+                      {summary.avgRankChange > 0 ? "↑" : "↓"}{" "}
+                      {Math.abs(summary.avgRankChange).toFixed(1)}
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href={`/rankings/${summary.domain.id}`}
+                  className="absolute inset-0 z-10"
+                  aria-label={`View ${summary.domain.name} rankings`}
+                />
               </BentoItem>
             ))}
         </BentoGrid>

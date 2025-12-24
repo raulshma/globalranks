@@ -1,5 +1,5 @@
 /**
- * Milestones Data - Key events affecting India's rankings
+ * Milestones Data - Key events affecting country rankings
  */
 
 export const milestonesData = [

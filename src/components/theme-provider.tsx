@@ -22,7 +22,7 @@ const ThemeProviderContext = React.createContext<ThemeProviderState | undefined>
 export function ThemeProvider({
   children,
   defaultTheme = "system",
-  storageKey = "india-ranks-theme",
+  storageKey = "global-indicies-theme",
 }: ThemeProviderProps) {
   const [theme, setTheme] = React.useState<Theme>(defaultTheme)
 

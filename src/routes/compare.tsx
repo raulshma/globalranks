@@ -145,7 +145,7 @@ export const Route = createFileRoute("/compare")({
     return {
       meta: [
         {
-          title: `Country Comparison — ${baseCountryName} — India Ranks`,
+          title: `Country Comparison — ${baseCountryName} — Global Indicies`,
         },
         {
           name: "description",
@@ -254,8 +254,7 @@ function ComparePage() {
   }, [availableCountries, countrySearch])
 
   // Get base country name
-  const baseCountryName =
-    data.countries.find((c) => c.code === data.baseCountry)?.name ?? data.baseCountry
+
 
   // Get selected peer group
   const selectedPeerGroup = data.peerGroups.find(
@@ -264,12 +263,7 @@ function ComparePage() {
 
   return (
     <div className="space-y-8 container mx-auto px-4 relative z-10">
-      <div>
-        <h1 className="text-2xl font-bold">Country Comparison</h1>
-        <p className="text-muted-foreground text-sm">
-          Compare {baseCountryName} with peer nations across global indices
-        </p>
-      </div>
+
 
       {/* Selection Controls */}
       <Card>
