@@ -70,6 +70,23 @@ import { futurePossibilitiesIndex, futurePossibilitiesRankings, totalCountries a
 import { globalHealthIndex, globalHealthRankings, totalCountries as globalHealthTotal } from './global-health'
 import { renewableEnergyIndex, renewableEnergyRankings, totalCountries as renewableEnergyTotal } from './renewable-energy'
 
+// New indices - December 2025 (batch 2)
+import { remittancesIndex, remittancesRankings, totalCountries as remittancesTotal } from './remittances'
+import { financialCentresIndex, financialCentresRankings, totalCountries as financialCentresTotal } from './financial-centres'
+import { futureSkillsIndex, futureSkillsRankings, totalCountries as futureSkillsTotal } from './future-skills'
+import { worldTalentIndex, worldTalentRankings, totalCountries as worldTalentTotal } from './world-talent'
+import { armsImportsIndex, armsImportsRankings, totalCountries as armsImportsTotal } from './arms-imports'
+import { startupEcosystemIndex, startupEcosystemRankings, totalCountries as startupEcosystemTotal } from './startup-ecosystem'
+import { internetFreedomIndex, internetFreedomRankings, totalCountries as internetFreedomTotal } from './internet-freedom'
+
+// New indices - December 2025 (batch 3)
+import { fdiConfidenceIndex, fdiConfidenceRankings, totalCountries as fdiConfidenceTotal } from './fdi-confidence'
+import { patentFilingsIndex, patentFilingsRankings, totalCountries as patentFilingsTotal } from './patent-filings'
+import { retailDevelopmentIndex, retailDevelopmentRankings, totalCountries as retailDevelopmentTotal } from './retail-development'
+import { happyPlanetIndex, happyPlanetRankings, totalCountries as happyPlanetTotal } from './happy-planet'
+import { digitalCompetitivenessIndex, digitalCompetitivenessRankings, totalCountries as digitalCompetitivenessTotal } from './digital-competitiveness'
+import { entrepreneurshipIndex, entrepreneurshipRankings, totalCountries as entrepreneurshipTotal } from './entrepreneurship'
+
 // Re-export individual index data
 export { populationIndex, populationRankings } from './population'
 export { giiIndex, giiRankings } from './gii'
@@ -135,6 +152,23 @@ export { futurePossibilitiesIndex, futurePossibilitiesRankings } from './future-
 export { globalHealthIndex, globalHealthRankings } from './global-health'
 export { renewableEnergyIndex, renewableEnergyRankings } from './renewable-energy'
 
+// New exports - December 2025 (batch 2)
+export { remittancesIndex, remittancesRankings } from './remittances'
+export { financialCentresIndex, financialCentresRankings } from './financial-centres'
+export { futureSkillsIndex, futureSkillsRankings } from './future-skills'
+export { worldTalentIndex, worldTalentRankings } from './world-talent'
+export { armsImportsIndex, armsImportsRankings } from './arms-imports'
+export { startupEcosystemIndex, startupEcosystemRankings } from './startup-ecosystem'
+export { internetFreedomIndex, internetFreedomRankings } from './internet-freedom'
+
+// New exports - December 2025 (batch 3)
+export { fdiConfidenceIndex, fdiConfidenceRankings } from './fdi-confidence'
+export { patentFilingsIndex, patentFilingsRankings } from './patent-filings'
+export { retailDevelopmentIndex, retailDevelopmentRankings } from './retail-development'
+export { happyPlanetIndex, happyPlanetRankings } from './happy-planet'
+export { digitalCompetitivenessIndex, digitalCompetitivenessRankings } from './digital-competitiveness'
+export { entrepreneurshipIndex, entrepreneurshipRankings } from './entrepreneurship'
+
 // All index metadata
 export const allIndices = [
   populationIndex,
@@ -198,6 +232,21 @@ export const allIndices = [
   futurePossibilitiesIndex,
   globalHealthIndex,
   renewableEnergyIndex,
+  // New indices - December 2025 (batch 2)
+  remittancesIndex,
+  financialCentresIndex,
+  futureSkillsIndex,
+  worldTalentIndex,
+  armsImportsIndex,
+  startupEcosystemIndex,
+  internetFreedomIndex,
+  // New indices - December 2025 (batch 3)
+  fdiConfidenceIndex,
+  patentFilingsIndex,
+  retailDevelopmentIndex,
+  happyPlanetIndex,
+  digitalCompetitivenessIndex,
+  entrepreneurshipIndex,
 ]
 
 // All rankings data with their index info
@@ -263,4 +312,19 @@ export const allRankingsData = [
   { index: futurePossibilitiesIndex, rankings: futurePossibilitiesRankings, totalCountries: futurePossibilitiesTotal, valueField: 'score' as const },
   { index: globalHealthIndex, rankings: globalHealthRankings, totalCountries: globalHealthTotal, valueField: 'score' as const },
   { index: renewableEnergyIndex, rankings: renewableEnergyRankings, totalCountries: renewableEnergyTotal, valueField: 'score' as const },
+  // New indices data - December 2025 (batch 2)
+  { index: remittancesIndex, rankings: remittancesRankings, totalCountries: remittancesTotal, valueField: 'score' as const },
+  { index: financialCentresIndex, rankings: financialCentresRankings, totalCountries: financialCentresTotal, valueField: 'score' as const },
+  { index: futureSkillsIndex, rankings: futureSkillsRankings, totalCountries: futureSkillsTotal, valueField: 'score' as const },
+  { index: worldTalentIndex, rankings: worldTalentRankings, totalCountries: worldTalentTotal, valueField: 'score' as const },
+  { index: armsImportsIndex, rankings: armsImportsRankings, totalCountries: armsImportsTotal, valueField: 'score' as const },
+  { index: startupEcosystemIndex, rankings: startupEcosystemRankings, totalCountries: startupEcosystemTotal, valueField: 'score' as const },
+  { index: internetFreedomIndex, rankings: internetFreedomRankings, totalCountries: internetFreedomTotal, valueField: 'score' as const },
+  // New indices data - December 2025 (batch 3)
+  { index: fdiConfidenceIndex, rankings: fdiConfidenceRankings, totalCountries: fdiConfidenceTotal, valueField: 'score' as const },
+  { index: patentFilingsIndex, rankings: patentFilingsRankings, totalCountries: patentFilingsTotal, valueField: 'score' as const },
+  { index: retailDevelopmentIndex, rankings: retailDevelopmentRankings, totalCountries: retailDevelopmentTotal, valueField: 'score' as const },
+  { index: happyPlanetIndex, rankings: happyPlanetRankings, totalCountries: happyPlanetTotal, valueField: 'score' as const },
+  { index: digitalCompetitivenessIndex, rankings: digitalCompetitivenessRankings, totalCountries: digitalCompetitivenessTotal, valueField: 'score' as const },
+  { index: entrepreneurshipIndex, rankings: entrepreneurshipRankings, totalCountries: entrepreneurshipTotal, valueField: 'score' as const },
 ]
