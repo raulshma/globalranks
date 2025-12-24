@@ -1,6 +1,7 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "short_name": "India Ranks",
+  "name": "India Ranks — Global Rankings Intelligence Platform",
+  "description": "Track and analyze India's position across global ranking indices. Compare with peer nations, explore trends, and build custom composite indices.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +11,21 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#16a34a",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["education", "news", "reference"],
+  "lang": "en"
 }

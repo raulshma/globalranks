@@ -11,6 +11,7 @@ import {
 import { getDashboardData } from "@/lib/server-functions/dashboard"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { CACHE_CONFIG } from "@/router"
 
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
@@ -19,9 +20,34 @@ const searchSchema = z.object({
 export const Route = createFileRoute("/")({
   validateSearch: searchSchema,
   loaderDeps: ({ search }) => ({ country: search.country }),
+  // Dashboard data is semi-dynamic, refresh every 5 minutes
+  staleTime: CACHE_CONFIG.DYNAMIC.staleTime,
+  gcTime: CACHE_CONFIG.DYNAMIC.gcTime,
   loader: async ({ deps }) => {
     const data = await getDashboardData({ data: { countryCode: deps.country } })
     return data
+  },
+  head: ({ loaderData }) => {
+    const year = loaderData?.latestYear ?? new Date().getFullYear()
+    return {
+      meta: [
+        {
+          title: `Global Rankings Dashboard ${year} — India Ranks`,
+        },
+        {
+          name: "description",
+          content: `Comprehensive dashboard showing performance across ${loaderData?.summary.totalIndices ?? "50+"} global ranking indices for ${year}. Track improvements, declines, and domain performance.`,
+        },
+        {
+          property: "og:title",
+          content: `Global Rankings Dashboard ${year}`,
+        },
+        {
+          property: "og:description",
+          content: `Comprehensive dashboard showing performance across global ranking indices for ${year}.`,
+        },
+      ],
+    }
   },
   component: HomePage,
 })

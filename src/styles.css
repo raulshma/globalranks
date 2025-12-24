@@ -5,6 +5,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Font loading optimization */
+@font-face {
+  font-family: 'Noto Sans Variable';
+  font-display: swap; /* Show fallback font immediately, swap when loaded */
+}
+
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.13 0.028 261.692);
@@ -126,4 +132,139 @@
   html {
     @apply font-sans;
     }
+}
+
+
+/* Touch-friendly utilities */
+@layer utilities {
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  .touch-pan-x {
+    touch-action: pan-x;
+  }
+  
+  .touch-pan-y {
+    touch-action: pan-y;
+  }
+  
+  /* Scrollbar styling for horizontal scroll areas */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--muted);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted-foreground);
+  }
+}
+
+/* Ensure minimum touch target sizes */
+@layer base {
+  button, 
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 36px;
+  }
+  
+  /* Exception for small inline elements */
+  .size-icon,
+  [class*="size-3"],
+  [class*="size-4"],
+  [class*="size-5"] {
+    min-height: auto;
+  }
+}
+
+/* Responsive table improvements */
+@layer utilities {
+  .table-responsive {
+    @apply overflow-x-auto -mx-4 sm:mx-0;
+  }
+  
+  .table-responsive table {
+    @apply min-w-[400px];
+  }
+}
+
+
+/* Focus styles for keyboard navigation */
+@layer base {
+  /* Enhanced focus ring for all focusable elements */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  
+  /* Remove default focus outline when using focus-visible */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* Screen reader only utility */
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: oklch(0.5 0 0);
+  }
+  
+  .dark {
+    --border: oklch(0.7 0 0);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

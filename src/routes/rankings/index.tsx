@@ -10,6 +10,7 @@ import { getAllDomainsWithStats } from "@/lib/server-functions/domains"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { CACHE_CONFIG } from "@/router"
 
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
@@ -18,11 +19,37 @@ const searchSchema = z.object({
 export const Route = createFileRoute("/rankings/")({
   validateSearch: searchSchema,
   loaderDeps: ({ search }) => ({ country: search.country }),
+  // Domain list is stable, cache for longer
+  staleTime: CACHE_CONFIG.STABLE.staleTime,
+  gcTime: CACHE_CONFIG.STABLE.gcTime,
   loader: async ({ deps }) => {
     const data = await getAllDomainsWithStats({
       data: { countryCode: deps.country },
     })
     return data
+  },
+  head: ({ loaderData }) => {
+    const year = loaderData?.latestYear ?? new Date().getFullYear()
+    const domainCount = loaderData?.domains.length ?? 0
+    return {
+      meta: [
+        {
+          title: `Global Rankings by Domain ${year} — India Ranks`,
+        },
+        {
+          name: "description",
+          content: `Explore international rankings across ${domainCount} domains including Economy, Education, Healthcare, Innovation, and more. Compare performance and track trends for ${year}.`,
+        },
+        {
+          property: "og:title",
+          content: `Global Rankings by Domain ${year}`,
+        },
+        {
+          property: "og:description",
+          content: `Explore international rankings across ${domainCount} domains for ${year}.`,
+        },
+      ],
+    }
   },
   component: RankingsPage,
 })

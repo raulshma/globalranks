@@ -63,3 +63,9 @@ export { getDashboardData } from './dashboard'
 export { getAllDomainsWithStats, getDomainWithIndices } from './domains'
 
 export { getIndexDetail } from './index-detail'
+
+export { getRankingsApi } from './api-rankings'
+export type { RankingsQueryParams, RankingsApiResponse } from './api-rankings'
+
+export { exportRankingsData } from './api-export'
+export type { ExportFormat, ExportRequest, ExportResponse } from './api-export'

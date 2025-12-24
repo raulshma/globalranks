@@ -9,11 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CustomIndexRouteImport } from './routes/custom-index'
+import { Route as TrendsRouteImport } from './routes/trends'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RankingsIndexRouteImport } from './routes/rankings/index'
 import { Route as RankingsDomainIndexRouteImport } from './routes/rankings/$domain/index'
 import { Route as RankingsDomainIndexIdRouteImport } from './routes/rankings/$domain/$indexId'
 
+const CustomIndexRoute = CustomIndexRouteImport.update({
+  id: '/custom-index',
+  path: '/custom-index',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrendsRoute = TrendsRouteImport.update({
+  id: '/trends',
+  path: '/trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +55,18 @@ const RankingsDomainIndexIdRoute = RankingsDomainIndexIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/compare': typeof CompareRoute
+  '/custom-index': typeof CustomIndexRoute
+  '/trends': typeof TrendsRoute
   '/rankings': typeof RankingsIndexRoute
   '/rankings/$domain/$indexId': typeof RankingsDomainIndexIdRoute
   '/rankings/$domain': typeof RankingsDomainIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/compare': typeof CompareRoute
+  '/custom-index': typeof CustomIndexRoute
+  '/trends': typeof TrendsRoute
   '/rankings': typeof RankingsIndexRoute
   '/rankings/$domain/$indexId': typeof RankingsDomainIndexIdRoute
   '/rankings/$domain': typeof RankingsDomainIndexRoute
@@ -50,6 +74,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/compare': typeof CompareRoute
+  '/custom-index': typeof CustomIndexRoute
+  '/trends': typeof TrendsRoute
   '/rankings/': typeof RankingsIndexRoute
   '/rankings/$domain/$indexId': typeof RankingsDomainIndexIdRoute
   '/rankings/$domain/': typeof RankingsDomainIndexRoute
@@ -58,14 +85,27 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/compare'
+    | '/custom-index'
+    | '/trends'
     | '/rankings'
     | '/rankings/$domain/$indexId'
     | '/rankings/$domain'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/rankings' | '/rankings/$domain/$indexId' | '/rankings/$domain'
+  to:
+    | '/'
+    | '/compare'
+    | '/custom-index'
+    | '/trends'
+    | '/rankings'
+    | '/rankings/$domain/$indexId'
+    | '/rankings/$domain'
   id:
     | '__root__'
     | '/'
+    | '/compare'
+    | '/custom-index'
+    | '/trends'
     | '/rankings/'
     | '/rankings/$domain/$indexId'
     | '/rankings/$domain/'
@@ -73,6 +113,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CompareRoute: typeof CompareRoute
+  CustomIndexRoute: typeof CustomIndexRoute
+  TrendsRoute: typeof TrendsRoute
   RankingsIndexRoute: typeof RankingsIndexRoute
   RankingsDomainIndexIdRoute: typeof RankingsDomainIndexIdRoute
   RankingsDomainIndexRoute: typeof RankingsDomainIndexRoute
@@ -80,6 +123,27 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/custom-index': {
+      id: '/custom-index'
+      path: '/custom-index'
+      fullPath: '/custom-index'
+      preLoaderRoute: typeof CustomIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trends': {
+      id: '/trends'
+      path: '/trends'
+      fullPath: '/trends'
+      preLoaderRoute: typeof TrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -113,6 +177,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CompareRoute: CompareRoute,
+  CustomIndexRoute: CustomIndexRoute,
+  TrendsRoute: TrendsRoute,
   RankingsIndexRoute: RankingsIndexRoute,
   RankingsDomainIndexIdRoute: RankingsDomainIndexIdRoute,
   RankingsDomainIndexRoute: RankingsDomainIndexRoute,

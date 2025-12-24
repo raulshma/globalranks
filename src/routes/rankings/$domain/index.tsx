@@ -11,6 +11,8 @@ import { getDomainWithIndices } from "@/lib/server-functions/domains"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { generateBreadcrumbJsonLd, generateDomainJsonLd } from "@/lib/seo"
+import { CACHE_CONFIG } from "@/router"
 
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
@@ -19,11 +21,61 @@ const searchSchema = z.object({
 export const Route = createFileRoute("/rankings/$domain/")({
   validateSearch: searchSchema,
   loaderDeps: ({ search }) => ({ country: search.country }),
+  // Domain detail is semi-stable
+  staleTime: CACHE_CONFIG.SEMI_STABLE.staleTime,
+  gcTime: CACHE_CONFIG.SEMI_STABLE.gcTime,
   loader: async ({ params, deps }) => {
     const data = await getDomainWithIndices({
       data: { domainId: params.domain, countryCode: deps.country },
     })
     return data
+  },
+  head: ({ loaderData, params }) => {
+    const domainName = loaderData?.domain.name ?? params.domain
+    const domainDescription = loaderData?.domain.description ?? ""
+    const year = loaderData?.latestYear ?? new Date().getFullYear()
+    const indicesCount = loaderData?.stats.totalIndices ?? 0
+
+    const jsonLd = loaderData?.domain
+      ? generateDomainJsonLd({
+          domainName,
+          domainDescription,
+          indicesCount,
+          countryName: "India",
+        })
+      : null
+
+    const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+      { name: "Home", url: "https://indiaranks.com" },
+      { name: "Rankings", url: "https://indiaranks.com/rankings" },
+      { name: domainName, url: `https://indiaranks.com/rankings/${params.domain}` },
+    ])
+
+    return {
+      meta: [
+        {
+          title: `${domainName} Rankings ${year} — India Ranks`,
+        },
+        {
+          name: "description",
+          content: `Performance in ${domainName} rankings for ${year}. Explore ${indicesCount} indices including ${domainDescription.toLowerCase()}.`,
+        },
+        {
+          property: "og:title",
+          content: `${domainName} Rankings ${year}`,
+        },
+        {
+          property: "og:description",
+          content: `Performance in ${domainName} rankings for ${year}.`,
+        },
+      ],
+      scripts: [
+        ...(jsonLd
+          ? [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }]
+          : []),
+        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd) },
+      ],
+    }
   },
   component: DomainDetailPage,
 })

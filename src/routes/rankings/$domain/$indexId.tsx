@@ -18,6 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
+import { generateBreadcrumbJsonLd, generateRankingIndexJsonLd } from "@/lib/seo"
+import { CACHE_CONFIG } from "@/router"
 
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
@@ -27,6 +29,9 @@ const searchSchema = z.object({
 export const Route = createFileRoute("/rankings/$domain/$indexId")({
   validateSearch: searchSchema,
   loaderDeps: ({ search }) => ({ country: search.country, year: search.year }),
+  // Index detail pages are stable (historical data doesn't change)
+  staleTime: CACHE_CONFIG.STABLE.staleTime,
+  gcTime: CACHE_CONFIG.STABLE.gcTime,
   loader: async ({ params, deps }) => {
     const data = await getIndexDetail({
       data: {
@@ -36,6 +41,72 @@ export const Route = createFileRoute("/rankings/$domain/$indexId")({
       },
     })
     return data
+  },
+  head: ({ loaderData, params }) => {
+    const indexName = loaderData?.index.name ?? params.indexId
+    const indexShortName = loaderData?.index.shortName ?? ""
+    const source = loaderData?.index.source ?? ""
+    const sourceUrl = loaderData?.index.sourceUrl ?? ""
+    const methodology = loaderData?.index.methodology ?? ""
+    const year = loaderData?.selectedYear ?? new Date().getFullYear()
+    const domainName = loaderData?.index.domain.name ?? params.domain
+    const entry = loaderData?.selectedCountry.entry
+
+    // Generate JSON-LD for the ranking
+    const rankingJsonLd = entry
+      ? generateRankingIndexJsonLd({
+          indexName,
+          indexDescription: methodology,
+          source,
+          sourceUrl,
+          countryName: "India",
+          rank: entry.rank,
+          totalCountries: entry.totalCountries,
+          year,
+          score: entry.score,
+          percentile: entry.percentile,
+        })
+      : null
+
+    const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+      { name: "Home", url: "https://indiaranks.com" },
+      { name: "Rankings", url: "https://indiaranks.com/rankings" },
+      { name: domainName, url: `https://indiaranks.com/rankings/${params.domain}` },
+      {
+        name: indexShortName || indexName,
+        url: `https://indiaranks.com/rankings/${params.domain}/${params.indexId}`,
+      },
+    ])
+
+    const rankText = entry
+      ? `Rank ${entry.rank}/${entry.totalCountries} (${entry.percentile.toFixed(0)}th percentile)`
+      : "No data available"
+
+    return {
+      meta: [
+        {
+          title: `${indexName} ${year} — India Ranks`,
+        },
+        {
+          name: "description",
+          content: `${indexName} ranking for ${year}: ${rankText}. Source: ${source}. ${methodology.slice(0, 100)}...`,
+        },
+        {
+          property: "og:title",
+          content: `${indexName} ${year}`,
+        },
+        {
+          property: "og:description",
+          content: `${indexName} ranking: ${rankText}`,
+        },
+      ],
+      scripts: [
+        ...(rankingJsonLd
+          ? [{ type: "application/ld+json", children: JSON.stringify(rankingJsonLd) }]
+          : []),
+        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd) },
+      ],
+    }
   },
   component: IndexDetailPage,
 })
@@ -221,6 +292,7 @@ function IndexDetailPage() {
                 <tbody>
                   {selectedCountry.history.map((entry, idx) => {
                     const prevEntry = selectedCountry.history[idx + 1]
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                     const rankChange = prevEntry
                       ? prevEntry.rank - entry.rank
                       : 0
