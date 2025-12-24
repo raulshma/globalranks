@@ -110,8 +110,14 @@ async function seed() {
       }
     }
 
-    await db.insert(rankingEntries).values(entries)
-    console.log(`   ✓ Inserted ${entries.length} ranking entries`)
+    // Insert in batches to avoid SQLite variable limit
+    const BATCH_SIZE = 500
+    for (let i = 0; i < entries.length; i += BATCH_SIZE) {
+      const batch = entries.slice(i, i + BATCH_SIZE)
+      await db.insert(rankingEntries).values(batch)
+      console.log(`   ✓ Inserted batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(entries.length / BATCH_SIZE)} (${batch.length} entries)`)
+    }
+    console.log(`   ✓ Total inserted: ${entries.length} ranking entries`)
 
     console.log('\n✅ Database seed completed successfully!')
     console.log(`

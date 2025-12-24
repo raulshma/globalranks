@@ -27,24 +27,23 @@ export const Route = createFileRoute("/")({
     const data = await getDashboardData({ data: { countryCode: deps.country } })
     return data
   },
-  head: ({ loaderData }) => {
-    const year = loaderData?.latestYear ?? new Date().getFullYear()
+  head: () => {
     return {
       meta: [
         {
-          title: `Global Rankings Dashboard ${year} — India Ranks`,
+          title: `Global Rankings Dashboard — India Ranks`,
         },
         {
           name: "description",
-          content: `Comprehensive dashboard showing performance across ${loaderData?.summary.totalIndices ?? "50+"} global ranking indices for ${year}. Track improvements, declines, and domain performance.`,
+          content: `Comprehensive dashboard showing performance across global ranking indices. Track improvements, declines, and domain performance using the latest available data.`,
         },
         {
           property: "og:title",
-          content: `Global Rankings Dashboard ${year}`,
+          content: `Global Rankings Dashboard`,
         },
         {
           property: "og:description",
-          content: `Comprehensive dashboard showing performance across global ranking indices for ${year}.`,
+          content: `Comprehensive dashboard showing performance across global ranking indices using the latest available data.`,
         },
       ],
     }
@@ -60,7 +59,7 @@ function HomePage() {
       <div>
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <p className="text-muted-foreground text-sm">
-          Overview of global rankings for {data.latestYear}
+          Overview of global rankings using latest available data
         </p>
       </div>
 

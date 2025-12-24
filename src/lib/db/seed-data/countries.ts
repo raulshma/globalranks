@@ -168,5 +168,7 @@ export const countriesData = [
   { id: 'c-sle', code: 'SLE', name: 'Sierra Leone', region: 'Africa', incomeLevel: 'low', population: 8791092 },
   { id: 'c-lbr', code: 'LBR', name: 'Liberia', region: 'Africa', incomeLevel: 'low', population: 5418377 },
   { id: 'c-vut', code: 'VUT', name: 'Vanuatu', region: 'Oceania', incomeLevel: 'lower-middle', population: 334506 },
+  { id: 'c-hnd', code: 'HND', name: 'Honduras', region: 'Latin America', incomeLevel: 'lower-middle', population: 10593798 },
+  { id: 'c-eri', code: 'ERI', name: 'Eritrea', region: 'Africa', incomeLevel: 'low', population: 3748901 },
 ]
 

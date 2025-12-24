@@ -10,6 +10,7 @@ export const domainsData = [
   { id: 'd-governance', name: 'Governance', description: 'Government effectiveness, democracy, and rule of law indices', icon: '🏛️' },
   { id: 'd-environment', name: 'Environment', description: 'Environmental performance and sustainability indices', icon: '🌍' },
   { id: 'd-infrastructure', name: 'Infrastructure', description: 'Physical and digital infrastructure quality indices', icon: '🏗️' },
+  { id: 'd-technology', name: 'Technology', description: 'Digital development, internet quality, and technological readiness indices', icon: '🖥️' },
   { id: 'd-military', name: 'Military Strength', description: 'Defense capabilities and military power indices', icon: '🛡️' },
   { id: 'd-sports', name: 'Sports', description: 'Sports performance and athletic achievement indices', icon: '🏆' },
   { id: 'd-happiness', name: 'Happiness', description: 'Well-being, life satisfaction, and quality of life indices', icon: '😊' },

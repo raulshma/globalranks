@@ -3,7 +3,7 @@
  * Requirements: 2.1, 3.3
  */
 
-import { asc, eq, sql } from "drizzle-orm"
+import { asc, desc, eq } from "drizzle-orm"
 import { z } from "zod"
 import { createServerFn } from "@tanstack/react-start"
 import { db } from "../db"
@@ -13,6 +13,8 @@ import { domains, rankingEntries } from "../db/schema"
  * Get dashboard overview data for a country
  * Requirement 2.1: Default to India as selected country
  * Requirement 3.3: Show domain-level aggregate scores and trends
+ * 
+ * Uses each index's latest available data rather than filtering to a single year
  */
 export const getDashboardData = createServerFn({ method: "GET" })
   .inputValidator(
@@ -28,21 +30,9 @@ export const getDashboardData = createServerFn({ method: "GET" })
       orderBy: [asc(domains.name)],
     })
 
-    // Get latest year's rankings for the country
-    const latestYearResult = await db
-      .select({ maxYear: sql<number>`MAX(${rankingEntries.year})` })
-      .from(rankingEntries)
-      .where(eq(rankingEntries.countryCode, countryCode))
-
-    const latestYear = latestYearResult[0]?.maxYear ?? new Date().getFullYear()
-
-    // Get all rankings for the country in the latest year
-    const latestRankings = await db.query.rankingEntries.findMany({
-      where: (entries, { and: andFn, eq: eqFn }) =>
-        andFn(
-          eqFn(entries.countryCode, countryCode),
-          eqFn(entries.year, latestYear)
-        ),
+    // Get all rankings for the country (all years) to find the latest per index
+    const allRankings = await db.query.rankingEntries.findMany({
+      where: eq(rankingEntries.countryCode, countryCode),
       with: {
         index: {
           with: {
@@ -50,26 +40,31 @@ export const getDashboardData = createServerFn({ method: "GET" })
           },
         },
       },
-      orderBy: [asc(rankingEntries.rank)],
+      orderBy: [desc(rankingEntries.year)],
     })
 
-    // Get previous year's rankings for trend calculation
-    const previousYear = latestYear - 1
-    const previousRankings = await db.query.rankingEntries.findMany({
-      where: (entries, { and: andFn, eq: eqFn }) =>
-        andFn(
-          eqFn(entries.countryCode, countryCode),
-          eqFn(entries.year, previousYear)
-        ),
-      with: {
-        index: true,
-      },
-    })
+    // Group rankings by indexId and get the latest entry for each
+    const latestRankingsMap = new Map<string, (typeof allRankings)[0]>()
+    const previousRankingsMap = new Map<string, (typeof allRankings)[0]>()
 
-    // Create a map of previous rankings by index ID
-    const previousRankingsMap = new Map(
-      previousRankings.map((r) => [r.indexId, r])
-    )
+    for (const ranking of allRankings) {
+      const indexId = ranking.indexId
+      if (!latestRankingsMap.has(indexId)) {
+        // First entry for this index (since ordered by year desc, it's the latest)
+        latestRankingsMap.set(indexId, ranking)
+      } else {
+        // Check if this is the previous year's entry for trend calculation
+        const latestEntry = latestRankingsMap.get(indexId)!
+        if (
+          ranking.year === latestEntry.year - 1 &&
+          !previousRankingsMap.has(indexId)
+        ) {
+          previousRankingsMap.set(indexId, ranking)
+        }
+      }
+    }
+
+    const latestRankings = Array.from(latestRankingsMap.values())
 
     // Calculate rank changes and categorize
     const rankingsWithChange = latestRankings.map((ranking) => {
@@ -78,6 +73,7 @@ export const getDashboardData = createServerFn({ method: "GET" })
       return {
         ...ranking,
         rankChange,
+        year: ranking.year,
         previousRank: previous?.rank ?? null,
       }
     })
@@ -165,8 +161,6 @@ export const getDashboardData = createServerFn({ method: "GET" })
 
     return {
       countryCode,
-      latestYear,
-      previousYear,
       summary: {
         totalIndices,
         avgPercentile,
@@ -183,6 +177,7 @@ export const getDashboardData = createServerFn({ method: "GET" })
         previousRank: r.previousRank,
         rankChange: r.rankChange,
         percentile: r.percentile,
+        year: r.year,
       })),
       topDeclining: topDeclining.map((r) => ({
         indexId: r.index.id,
@@ -192,6 +187,7 @@ export const getDashboardData = createServerFn({ method: "GET" })
         previousRank: r.previousRank,
         rankChange: r.rankChange,
         percentile: r.percentile,
+        year: r.year,
       })),
     }
   })

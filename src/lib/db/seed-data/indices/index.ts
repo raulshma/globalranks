@@ -55,6 +55,13 @@ import { talentRankingIndex, talentRankingRankings, totalCountries as talentRank
 import { givingIndex, givingIndexRankings, totalCountries as givingTotal } from './giving-index'
 import { liveabilityIndex, liveabilityRankings, totalCountries as liveabilityTotal } from './liveability'
 
+// More new indices - December 2025
+import { prosperityIndex, prosperityRankings, totalCountries as prosperityTotal } from './prosperity-index'
+import { qualityOfLifeIndex, qualityOfLifeRankings, totalCountries as qualityOfLifeTotal } from './quality-of-life'
+import { ipIndex, ipIndexRankings, totalCountries as ipTotal } from './ip-index'
+import { digitalQualityOfLifeIndex, digitalQualityOfLifeRankings, totalCountries as digitalQualityOfLifeTotal } from './digital-quality-of-life'
+import { modernSlaveryIndex, modernSlaveryRankings, totalCountries as modernSlaveryTotal } from './modern-slavery'
+
 // Re-export individual index data
 export { populationIndex, populationRankings } from './population'
 export { giiIndex, giiRankings } from './gii'
@@ -104,6 +111,13 @@ export { openBudgetIndex, openBudgetRankings } from './open-budget'
 export { talentRankingIndex, talentRankingRankings } from './talent-ranking'
 export { givingIndex, givingIndexRankings } from './giving-index'
 export { liveabilityIndex, liveabilityRankings } from './liveability'
+
+// More new exports - December 2025
+export { prosperityIndex, prosperityRankings } from './prosperity-index'
+export { qualityOfLifeIndex, qualityOfLifeRankings } from './quality-of-life'
+export { ipIndex, ipIndexRankings } from './ip-index'
+export { digitalQualityOfLifeIndex, digitalQualityOfLifeRankings } from './digital-quality-of-life'
+export { modernSlaveryIndex, modernSlaveryRankings } from './modern-slavery'
 
 // All index metadata
 export const allIndices = [
@@ -155,6 +169,12 @@ export const allIndices = [
   talentRankingIndex,
   givingIndex,
   liveabilityIndex,
+  // More new indices - December 2025
+  prosperityIndex,
+  qualityOfLifeIndex,
+  ipIndex,
+  digitalQualityOfLifeIndex,
+  modernSlaveryIndex,
 ]
 
 // All rankings data with their index info
@@ -207,4 +227,10 @@ export const allRankingsData = [
   { index: talentRankingIndex, rankings: talentRankingRankings, totalCountries: talentRankingTotal, valueField: 'score' as const },
   { index: givingIndex, rankings: givingIndexRankings, totalCountries: givingTotal, valueField: 'score' as const },
   { index: liveabilityIndex, rankings: liveabilityRankings, totalCountries: liveabilityTotal, valueField: 'score' as const },
+  // More new indices data - December 2025
+  { index: prosperityIndex, rankings: prosperityRankings, totalCountries: prosperityTotal, valueField: 'score' as const },
+  { index: qualityOfLifeIndex, rankings: qualityOfLifeRankings, totalCountries: qualityOfLifeTotal, valueField: 'score' as const },
+  { index: ipIndex, rankings: ipIndexRankings, totalCountries: ipTotal, valueField: 'score' as const },
+  { index: digitalQualityOfLifeIndex, rankings: digitalQualityOfLifeRankings, totalCountries: digitalQualityOfLifeTotal, valueField: 'score' as const },
+  { index: modernSlaveryIndex, rankings: modernSlaveryRankings, totalCountries: modernSlaveryTotal, valueField: 'score' as const },
 ]
