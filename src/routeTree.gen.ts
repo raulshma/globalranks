@@ -10,33 +10,72 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RankingsIndexRouteImport } from './routes/rankings/index'
+import { Route as RankingsDomainIndexRouteImport } from './routes/rankings/$domain/index'
+import { Route as RankingsDomainIndexIdRouteImport } from './routes/rankings/$domain/$indexId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RankingsIndexRoute = RankingsIndexRouteImport.update({
+  id: '/rankings/',
+  path: '/rankings/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingsDomainIndexRoute = RankingsDomainIndexRouteImport.update({
+  id: '/rankings/$domain/',
+  path: '/rankings/$domain/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingsDomainIndexIdRoute = RankingsDomainIndexIdRouteImport.update({
+  id: '/rankings/$domain/$indexId',
+  path: '/rankings/$domain/$indexId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/rankings': typeof RankingsIndexRoute
+  '/rankings/$domain/$indexId': typeof RankingsDomainIndexIdRoute
+  '/rankings/$domain': typeof RankingsDomainIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/rankings': typeof RankingsIndexRoute
+  '/rankings/$domain/$indexId': typeof RankingsDomainIndexIdRoute
+  '/rankings/$domain': typeof RankingsDomainIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/rankings/': typeof RankingsIndexRoute
+  '/rankings/$domain/$indexId': typeof RankingsDomainIndexIdRoute
+  '/rankings/$domain/': typeof RankingsDomainIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/rankings'
+    | '/rankings/$domain/$indexId'
+    | '/rankings/$domain'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/rankings' | '/rankings/$domain/$indexId' | '/rankings/$domain'
+  id:
+    | '__root__'
+    | '/'
+    | '/rankings/'
+    | '/rankings/$domain/$indexId'
+    | '/rankings/$domain/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RankingsIndexRoute: typeof RankingsIndexRoute
+  RankingsDomainIndexIdRoute: typeof RankingsDomainIndexIdRoute
+  RankingsDomainIndexRoute: typeof RankingsDomainIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +87,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rankings/': {
+      id: '/rankings/'
+      path: '/rankings'
+      fullPath: '/rankings'
+      preLoaderRoute: typeof RankingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rankings/$domain/': {
+      id: '/rankings/$domain/'
+      path: '/rankings/$domain'
+      fullPath: '/rankings/$domain'
+      preLoaderRoute: typeof RankingsDomainIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rankings/$domain/$indexId': {
+      id: '/rankings/$domain/$indexId'
+      path: '/rankings/$domain/$indexId'
+      fullPath: '/rankings/$domain/$indexId'
+      preLoaderRoute: typeof RankingsDomainIndexIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RankingsIndexRoute: RankingsIndexRoute,
+  RankingsDomainIndexIdRoute: RankingsDomainIndexIdRoute,
+  RankingsDomainIndexRoute: RankingsDomainIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
