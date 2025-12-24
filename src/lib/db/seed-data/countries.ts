@@ -132,4 +132,16 @@ export const countriesData = [
   { id: 'c-brn', code: 'BRN', name: 'Brunei', region: 'Asia', incomeLevel: 'high', population: 466330 },
   { id: 'c-isl', code: 'ISL', name: 'Iceland', region: 'Europe', incomeLevel: 'high', population: 398266 },
   { id: 'c-sen', code: 'SEN', name: 'Senegal', region: 'Africa', incomeLevel: 'lower-middle', population: 18275743 },
+  // Additional countries for comprehensive index coverage
+  { id: 'c-gtm', code: 'GTM', name: 'Guatemala', region: 'Latin America', incomeLevel: 'upper-middle', population: 18275743 },
+  { id: 'c-bol', code: 'BOL', name: 'Bolivia', region: 'Latin America', incomeLevel: 'lower-middle', population: 12186079 },
+  { id: 'c-ben', code: 'BEN', name: 'Benin', region: 'Africa', incomeLevel: 'lower-middle', population: 13712828 },
+  { id: 'c-cmr', code: 'CMR', name: 'Cameroon', region: 'Africa', incomeLevel: 'lower-middle', population: 28647293 },
+  { id: 'c-mrt', code: 'MRT', name: 'Mauritania', region: 'Africa', incomeLevel: 'lower-middle', population: 4862989 },
+  { id: 'c-mwi', code: 'MWI', name: 'Malawi', region: 'Africa', incomeLevel: 'low', population: 21473304 },
+  { id: 'c-nic', code: 'NIC', name: 'Nicaragua', region: 'Latin America', incomeLevel: 'lower-middle', population: 7046310 },
+  { id: 'c-png', code: 'PNG', name: 'Papua New Guinea', region: 'Oceania', incomeLevel: 'lower-middle', population: 10329931 },
+  { id: 'c-tls', code: 'TLS', name: 'Timor-Leste', region: 'Asia', incomeLevel: 'lower-middle', population: 1360596 },
+  { id: 'c-zmb', code: 'ZMB', name: 'Zambia', region: 'Africa', incomeLevel: 'lower-middle', population: 20569737 },
 ]
+
