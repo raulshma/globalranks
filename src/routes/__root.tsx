@@ -10,10 +10,12 @@ import { TanStackDevtools } from "@tanstack/react-devtools"
 
 import appCss from "../styles.css?url"
 import { ThemeProvider } from "@/components/theme-provider"
+import { BackgroundProvider, useBackground } from "@/components/background-provider"
 import { Layout } from "@/components/layout"
 import { getAllCountries } from "@/lib/server-functions/countries"
 import { generateWebsiteJsonLd } from "@/lib/seo"
 import { ThreeBackground } from "@/components/ThreeBackground"
+import { BackgroundGradientAnimation } from "@/components/background-gradient-animation"
 import { ShootingMeteors } from "@/components/ShootingMeteors"
 import { Toaster } from "sonner"
 
@@ -181,6 +183,22 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   )
 }
 
+// Background renderer component that switches based on preference
+function BackgroundRenderer() {
+  const { background } = useBackground()
+  
+  if (background === "gradient") {
+    return <BackgroundGradientAnimation />
+  }
+  
+  return (
+    <>
+      <ThreeBackground />
+      <ShootingMeteors />
+    </>
+  )
+}
+
 function RootComponent() {
   const { countries } = Route.useLoaderData()
   const search: Record<string, string | undefined> = Route.useSearch()
@@ -190,12 +208,14 @@ function RootComponent() {
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="global-indicies-theme">
-      <Layout countries={countries} selectedCountry={selectedCountry}>
-        <ThreeBackground />
-        <ShootingMeteors />
-        <Outlet />
-        <Toaster />
-      </Layout>
+      <BackgroundProvider defaultBackground="3d" storageKey="global-indicies-background">
+        <Layout countries={countries} selectedCountry={selectedCountry}>
+          <BackgroundRenderer />
+          <Outlet />
+          <Toaster />
+        </Layout>
+      </BackgroundProvider>
     </ThemeProvider>
   )
 }
+

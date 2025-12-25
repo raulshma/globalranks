@@ -180,6 +180,13 @@
     
     --animate-float: float 6s ease-in-out infinite;
     --animate-shimmer: shimmer 2s infinite linear;
+    
+    /* Gradient background animations */
+    --animate-first: moveVertical 30s ease infinite;
+    --animate-second: moveInCircle 20s reverse infinite;
+    --animate-third: moveInCircle 40s linear infinite;
+    --animate-fourth: moveHorizontal 40s ease infinite;
+    --animate-fifth: moveInCircle 20s ease infinite;
 
     @keyframes float {
         0% { transform: translateY(0px); }
@@ -190,6 +197,24 @@
     @keyframes shimmer {
         from { transform: translateX(-100%); }
         to { transform: translateX(100%); }
+    }
+    
+    @keyframes moveHorizontal {
+        0% { transform: translateX(-50%) translateY(-10%); }
+        50% { transform: translateX(50%) translateY(10%); }
+        100% { transform: translateX(-50%) translateY(-10%); }
+    }
+
+    @keyframes moveInCircle {
+        0% { transform: rotate(0deg); }
+        50% { transform: rotate(180deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes moveVertical {
+        0% { transform: translateY(-50%); }
+        50% { transform: translateY(50%); }
+        100% { transform: translateY(-50%); }
     }
 }
 
