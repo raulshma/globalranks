@@ -147,6 +147,9 @@ export const rateLimitConfigs = {
 
   /** Export rate limit: 10 exports per minute */
   export: { limit: 10, windowMs: 60 * 1000 },
+
+  /** Report rate limit: 5 reports per 10 minutes */
+  report: { limit: 5, windowMs: 10 * 60 * 1000 },
 } as const
 
 /**

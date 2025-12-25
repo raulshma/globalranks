@@ -35,15 +35,21 @@ const config = defineConfig({
   },
   // Optimize dependencies
   optimizeDeps: {
-    include: ['react', 'react-dom', '@tanstack/react-router', 'recharts'],
+    include: [
+      'react',
+      'react-dom',
+      '@tanstack/react-router',
+      'recharts',
+      'detect-gpu',
+    ],
   },
   ssr: {
     noExternal: [
       '@tabler/icons-react',
       '@react-three/fiber',
       '@react-three/drei',
-      'react-reconciler',
       'three',
+      'detect-gpu',
     ],
   },
   environments: {

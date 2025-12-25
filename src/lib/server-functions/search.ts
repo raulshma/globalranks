@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '../db'
 import { rankingEntries, rankingIndices } from '../db/schema'
+import { withCache, cacheKey, CACHE_TTL } from '../cache'
 
 // Filter schema for comprehensive filtering
 const filterSchema = z.object({
@@ -153,34 +154,41 @@ export const getFilteredRankings = createServerFn({ method: 'GET' })
  */
 export const getFilterOptions = createServerFn({ method: 'GET' }).handler(
   async () => {
-    // Get all domains
-    const domains = await db.query.domains.findMany({
-      orderBy: (d, { asc: ascFn }) => [ascFn(d.name)],
-    })
+    // Redis cache: filter options (rarely change)
+    return withCache(
+      cacheKey('filters', 'options'),
+      CACHE_TTL.REFERENCE,
+      async () => {
+        // Get all domains
+        const domains = await db.query.domains.findMany({
+          orderBy: (d, { asc: ascFn }) => [ascFn(d.name)],
+        })
 
-    // Get all indices for source options
-    const indices = await db.query.rankingIndices.findMany({
-      orderBy: (idx, { asc: ascFn }) => [ascFn(idx.source)],
-    })
+        // Get all indices for source options
+        const indices = await db.query.rankingIndices.findMany({
+          orderBy: (idx, { asc: ascFn }) => [ascFn(idx.source)],
+        })
 
-    // Get unique sources
-    const sources = [...new Set(indices.map((i) => i.source))].sort()
+        // Get unique sources
+        const sources = [...new Set(indices.map((i) => i.source))].sort()
 
-    // Get all ranking entries for year options
-    const entries = await db.query.rankingEntries.findMany({
-      columns: {
-        year: true,
-      },
-    })
+        // Get all ranking entries for year options
+        const entries = await db.query.rankingEntries.findMany({
+          columns: {
+            year: true,
+          },
+        })
 
-    // Get unique years
-    const years = [...new Set(entries.map((e) => e.year))].sort((a, b) => b - a)
+        // Get unique years
+        const years = [...new Set(entries.map((e) => e.year))].sort((a, b) => b - a)
 
-    return {
-      domains,
-      sources,
-      years,
-      methodologies: [...new Set(indices.map((i) => i.methodology))].sort(),
-    }
+        return {
+          domains,
+          sources,
+          years,
+          methodologies: [...new Set(indices.map((i) => i.methodology))].sort(),
+        }
+      }
+    )
   }
 )

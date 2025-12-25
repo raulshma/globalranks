@@ -76,3 +76,5 @@ export type {
   DomainRankingGroup,
   CountryRankingsPageData,
 } from './country-rankings'
+
+export { submitDataReport, getReportCount } from './data-reports'

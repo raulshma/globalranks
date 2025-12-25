@@ -15,6 +15,7 @@ import { getAllCountries } from "@/lib/server-functions/countries"
 import { generateWebsiteJsonLd } from "@/lib/seo"
 import { ThreeBackground } from "@/components/ThreeBackground"
 import { ShootingMeteors } from "@/components/ShootingMeteors"
+import { Toaster } from "sonner"
 
 // Router context type
 export interface RouterContext {
@@ -193,6 +194,7 @@ function RootComponent() {
         <ThreeBackground />
         <ShootingMeteors />
         <Outlet />
+        <Toaster />
       </Layout>
     </ThemeProvider>
   )

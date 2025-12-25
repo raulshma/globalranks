@@ -9,6 +9,7 @@ import { createServerFn } from '@tanstack/react-start'
 import { db } from '../db'
 import { countries, peerGroups, rankingEntries, rankingIndices } from '../db/schema'
 import type { ComparisonDataPoint, GapAnalysis } from '../types'
+import { withCache, cacheKey, CACHE_TTL } from '../cache'
 
 /**
  * Compare multiple countries across all or selected indices
@@ -474,10 +475,17 @@ export const getCountriesByIncomeLevel = createServerFn({ method: 'GET' })
   .handler(async ({ data }) => {
     const { incomeLevel } = data
 
-    const matchingCountries = await db.query.countries.findMany({
-      where: eq(countries.incomeLevel, incomeLevel),
-      orderBy: [asc(countries.name)],
-    })
+    // Redis cache: countries by income level (static data)
+    return withCache(
+      cacheKey('countriesByIncome', incomeLevel),
+      CACHE_TTL.STATIC,
+      async () => {
+        const matchingCountries = await db.query.countries.findMany({
+          where: eq(countries.incomeLevel, incomeLevel),
+          orderBy: [asc(countries.name)],
+        })
 
-    return matchingCountries
+        return matchingCountries
+      }
+    )
   })

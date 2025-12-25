@@ -13,6 +13,7 @@ import { DomainIcon } from "@/components/domain-icon"
 import { cn } from "@/lib/utils"
 import { LoadingGlowCard } from "@/components/loading-glow-card"
 import { CACHE_CONFIG } from "@/lib/cache-config"
+import { ReportButton } from "@/components/report-button"
 
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
@@ -81,7 +82,11 @@ function RankingsPage() {
 
       <div className="space-y-12">
         {data.domains.map((domain) => (
-          <DomainSection key={domain.id} domain={domain} />
+          <DomainSection 
+            key={domain.id} 
+            domain={domain} 
+            year={data.latestYear ?? new Date().getFullYear()} 
+          />
         ))}
       </div>
     </div>
@@ -134,9 +139,10 @@ interface DomainData {
 
 interface DomainSectionProps {
   domain: DomainData
+  year: number
 }
 
-function DomainSection({ domain }: DomainSectionProps) {
+function DomainSection({ domain, year }: DomainSectionProps) {
   const { stats, rankings } = domain
 
   return (
@@ -215,6 +221,7 @@ function DomainSection({ domain }: DomainSectionProps) {
                     <th className="py-3 px-4 text-right font-bold text-xs uppercase tracking-wider text-muted-foreground">Rank</th>
                     <th className="py-3 px-4 text-right font-bold text-xs uppercase tracking-wider text-muted-foreground">Percentile</th>
                     <th className="py-3 px-4 text-right font-bold text-xs uppercase tracking-wider text-muted-foreground">Change</th>
+                    <th className="py-3 px-4 text-right font-bold text-xs uppercase tracking-wider text-muted-foreground">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
@@ -248,6 +255,13 @@ function DomainSection({ domain }: DomainSectionProps) {
                         <RankChangeIndicator
                           change={ranking.rankChange}
                           previousRank={ranking.previousRank}
+                        />
+                      </td>
+                      <td className="py-4 text-right">
+                        <ReportButton 
+                          indexId={ranking.indexId} 
+                          year={year} 
+                          indexName={ranking.indexName} 
                         />
                       </td>
                     </tr>

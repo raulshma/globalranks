@@ -165,6 +165,33 @@ export const alerts = sqliteTable(
   (table) => [index('alerts_user_idx').on(table.userId)]
 )
 
+// Data reports for incorrect index data
+export const dataReports = sqliteTable(
+  'data_reports',
+  {
+    id: text('id').primaryKey(),
+    indexId: text('index_id')
+      .notNull()
+      .references(() => rankingIndices.id),
+    year: integer('year').notNull(),
+    reportCount: integer('report_count').notNull().default(1),
+    // Fingerprint for spam prevention (hashed IP + user agent)
+    lastReporterFingerprint: text('last_reporter_fingerprint').notNull(),
+    reason: text('reason'), // Optional reason for the report
+    createdAt: integer('created_at', { mode: 'timestamp' })
+      .notNull()
+      .$defaultFn(() => new Date()),
+    updatedAt: integer('updated_at', { mode: 'timestamp' })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  },
+  (table) => [
+    // Ensure one report entry per index/year combination
+    uniqueIndex('data_reports_index_year_idx').on(table.indexId, table.year),
+    index('data_reports_index_idx').on(table.indexId),
+  ]
+)
+
 
 // Relations for Drizzle query builder
 export const countriesRelations = relations(countries, ({ many }) => ({
@@ -210,3 +237,10 @@ export const customIndicesRelations = relations(customIndices, () => ({}))
 export const alertsRelations = relations(alerts, () => ({}))
 
 export const peerGroupsRelations = relations(peerGroups, () => ({}))
+
+export const dataReportsRelations = relations(dataReports, ({ one }) => ({
+  index: one(rankingIndices, {
+    fields: [dataReports.indexId],
+    references: [rankingIndices.id],
+  }),
+}))
