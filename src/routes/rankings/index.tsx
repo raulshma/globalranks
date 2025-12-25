@@ -83,7 +83,7 @@ function RankingsPage() {
           <DomainSection 
             key={domain.id} 
             domain={domain} 
-            year={data.latestYear ?? new Date().getFullYear()} 
+            year={data.latestYear} 
           />
         ))}
       </div>

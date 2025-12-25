@@ -10,7 +10,7 @@ import { useSettings } from "./settings-provider"
 function CoinStack({ position }: { position: [number, number, number] }) {
   const group = useRef<THREE.Group>(null!)
   useFrame((_, delta) => {
-    if (group.current) group.current.rotation.y += delta * 0.5
+    group.current.rotation.y += delta * 0.5
   })
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.8} floatingRange={[-0.1, 0.1]}>
@@ -28,9 +28,7 @@ function CoinStack({ position }: { position: [number, number, number] }) {
 function NatureSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((state) => {
-      if (group.current) {
-        group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
-      }
+      group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
     })
     return (
       <Float speed={1} rotationIntensity={0.8} floatIntensity={0.5}>
@@ -49,10 +47,8 @@ function NatureSymbol({ position }: { position: [number, number, number] }) {
 function InnovationSymbol({ position }: { position: [number, number, number] }) {
     const ringsRef = useRef<THREE.Group>(null!)
     useFrame((_state, delta) => {
-        if (ringsRef.current) {
-            ringsRef.current.rotation.x += delta * 0.2
-            ringsRef.current.rotation.y += delta * 0.3
-        }
+        ringsRef.current.rotation.x += delta * 0.2
+        ringsRef.current.rotation.y += delta * 0.3
     })
     return (
       <Float speed={2} rotationIntensity={1.5} floatIntensity={0.5}>
@@ -75,7 +71,7 @@ function InnovationSymbol({ position }: { position: [number, number, number] }) 
 function HealthSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((_state, delta) => {
-        if (group.current) group.current.rotation.z += delta * 0.2
+        group.current.rotation.z += delta * 0.2
     })
     return (
         <Float speed={1.2} rotationIntensity={0.6} floatIntensity={0.5}>
@@ -101,7 +97,7 @@ function HealthSymbol({ position }: { position: [number, number, number] }) {
 function EducationSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((_state, delta) => {
-        if(group.current) group.current.rotation.y += delta * 0.1
+        group.current.rotation.y += delta * 0.1
     })
     return (
         <Float speed={0.9} rotationIntensity={0.4} floatIntensity={0.4}>
@@ -122,7 +118,7 @@ function EducationSymbol({ position }: { position: [number, number, number] }) {
 function InfrastructureSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((_state, delta) => {
-        if(group.current) group.current.rotation.y -= delta * 0.15
+        group.current.rotation.y -= delta * 0.15
     })
     return (
         <Float speed={0.7} rotationIntensity={0.3} floatIntensity={0.3}>
@@ -142,10 +138,8 @@ function InfrastructureSymbol({ position }: { position: [number, number, number]
 function PeaceSymbol({ position }: { position: [number, number, number] }) {
     const mesh = useRef<THREE.Mesh>(null!)
     useFrame((_state, delta) => {
-        if(mesh.current) {
-            mesh.current.rotation.y += delta * 0.2
-            mesh.current.rotation.z = Math.sin(_state.clock.elapsedTime) * 0.1
-        }
+        mesh.current.rotation.y += delta * 0.2
+        mesh.current.rotation.z = Math.sin(_state.clock.elapsedTime) * 0.1
     })
     return (
         <Float speed={0.8} rotationIntensity={0.4} floatIntensity={0.6}>
@@ -162,10 +156,8 @@ function PeaceSymbol({ position }: { position: [number, number, number] }) {
 function FreedomSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((state) => {
-        if(group.current) {
-            // Gentle flap or sway
-            group.current.rotation.z = -0.5 + Math.sin(state.clock.elapsedTime * 2) * 0.1
-        }
+        // Gentle flap or sway
+        group.current.rotation.z = -0.5 + Math.sin(state.clock.elapsedTime * 2) * 0.1
     })
     return (
         <Float speed={1.1} rotationIntensity={0.7} floatIntensity={0.6}>
@@ -184,9 +176,7 @@ function FreedomSymbol({ position }: { position: [number, number, number] }) {
 function SportsSymbol({ position }: { position: [number, number, number] }) {
     const ringRef = useRef<THREE.Mesh>(null!)
     useFrame((_state, delta) => {
-        if (ringRef.current) {
-            ringRef.current.rotation.z += delta * 2
-        }
+        ringRef.current.rotation.z += delta * 2
     })
     return (
       <Float speed={1.5} rotationIntensity={1} floatIntensity={0.8}>
@@ -212,8 +202,8 @@ function TechSymbol({ position }: { position: [number, number, number] }) {
     const innerRef = useRef<THREE.Mesh>(null!)
     
     useFrame((_state, delta) => {
-        if(outerRef.current) outerRef.current.rotation.y += delta * 0.5
-        if(innerRef.current) innerRef.current.rotation.y -= delta * 0.5
+        outerRef.current.rotation.y += delta * 0.5
+        innerRef.current.rotation.y -= delta * 0.5
     })
 
     return (
@@ -233,7 +223,7 @@ function TechSymbol({ position }: { position: [number, number, number] }) {
 function LawSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((_state, delta) => {
-        if (group.current) group.current.rotation.y += delta * 0.2
+        group.current.rotation.y += delta * 0.2
     })
     return (
       <Float speed={0.6} rotationIntensity={0.2} floatIntensity={0.4}>
@@ -258,14 +248,10 @@ function EnergySymbol({ position }: { position: [number, number, number] }) {
     const ringRef = useRef<THREE.Mesh>(null!)
     
     useFrame((_state, delta) => {
-        if(crystalRef.current) {
-            crystalRef.current.rotation.x += delta * 0.5
-            crystalRef.current.rotation.z += delta * 0.5
-        }
-        if(ringRef.current) {
-            ringRef.current.rotation.x -= delta * 1
-            ringRef.current.rotation.y += delta * 0.5
-        }
+        crystalRef.current.rotation.x += delta * 0.5
+        crystalRef.current.rotation.z += delta * 0.5
+        ringRef.current.rotation.x -= delta * 1
+        ringRef.current.rotation.y += delta * 0.5
     })
 
     return (
@@ -289,8 +275,8 @@ function TravelSymbol({ position }: { position: [number, number, number] }) {
     const orbitRef = useRef<THREE.Mesh>(null!)
 
     useFrame((_state, delta) => {
-        if(globeRef.current) globeRef.current.rotation.y += delta * 0.2
-        if(orbitRef.current) orbitRef.current.rotation.z -= delta * 0.3
+        globeRef.current.rotation.y += delta * 0.2
+        orbitRef.current.rotation.z -= delta * 0.3
     })
 
     return (
@@ -319,8 +305,8 @@ function MediaSymbol({ position }: { position: [number, number, number] }) {
     
     useFrame((state) => {
         const time = state.clock.elapsedTime
-        if(signal1.current) signal1.current.scale.setScalar(1 + Math.sin(time * 3) * 0.1)
-        if(signal2.current) signal2.current.scale.setScalar(1 + Math.sin(time * 3 + 1) * 0.1)
+        signal1.current.scale.setScalar(1 + Math.sin(time * 3) * 0.1)
+        signal2.current.scale.setScalar(1 + Math.sin(time * 3 + 1) * 0.1)
     })
 
     return (
@@ -348,16 +334,14 @@ function MediaSymbol({ position }: { position: [number, number, number] }) {
 function ParallaxGroup({ children, intensity = 0.5 }: { children: React.ReactNode; intensity?: number }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((state) => {
-        if(group.current) {
-            // Gentle parallax based on mouse position
-            // Mouse x/y are from -1 to 1
-            const targetX = state.mouse.x * intensity
-            const targetY = state.mouse.y * intensity
-            
-            // Smoothly interpolate current rotation to target
-            group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetY, 0.05)
-            group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetX, 0.05)
-        }
+        // Gentle parallax based on mouse position
+        // Mouse x/y are from -1 to 1
+        const targetX = state.mouse.x * intensity
+        const targetY = state.mouse.y * intensity
+        
+        // Smoothly interpolate current rotation to target
+        group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetY, 0.05)
+        group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetX, 0.05)
     })
     return <group ref={group}>{children}</group>
 }

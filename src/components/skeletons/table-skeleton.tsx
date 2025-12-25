@@ -46,15 +46,15 @@ export function TableSkeleton({
          <div className="divide-y divide-white/5">
              {Array.from({ length: rows }).map((_, r) => (
                 <div key={r} className="flex gap-4 py-3">
-                    {Array.from({ length: columns }).map((_, c) => (
+                    {Array.from({ length: columns }).map((__unused, c) => (
                         <div key={c} className={cn(
                             c === 0 ? "w-1/3" : "w-20 ml-auto"
                         )}>
-                            <LoadingGlow 
+                            <LoadingGlow
                                 className={cn(
                                    "bg-white/5",
                                    c === 0 ? "h-5 w-3/4" : "h-5 w-full"
-                                )} 
+                                )}
                             />
                             {c === 0 && <LoadingGlow className="h-3 w-1/2 bg-white/5 mt-1" />}
                         </div>

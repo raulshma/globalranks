@@ -27,7 +27,10 @@ export function BackgroundProvider({
   const [background, setBackground] = React.useState<BackgroundType>(() => {
     // On client, read from localStorage immediately
     if (typeof window !== "undefined") {
-      return (localStorage.getItem(storageKey) as BackgroundType) || defaultBackground
+      const stored = localStorage.getItem(storageKey)
+      if (stored !== null) {
+        return stored as BackgroundType
+      }
     }
     return defaultBackground
   })

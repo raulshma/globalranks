@@ -27,7 +27,10 @@ export function ThemeProvider({
   const [theme, setTheme] = React.useState<Theme>(() => {
     // On client, read from localStorage immediately
     if (typeof window !== "undefined") {
-      return (localStorage.getItem(storageKey) as Theme) || defaultTheme
+      const stored = localStorage.getItem(storageKey)
+      if (stored !== null) {
+        return stored as Theme
+      }
     }
     return defaultTheme
   })

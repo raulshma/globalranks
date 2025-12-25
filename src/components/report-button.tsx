@@ -32,11 +32,12 @@ export function ReportButton({ indexId, year, indexName }: ReportButtonProps) {
       
       // Generate client-side fingerprint
       // Using User Agent + Timezone + Screen Resolution as requested
-      const fingerprint = [
+      const fingerprintComponents = [
         navigator.userAgent,
         Intl.DateTimeFormat().resolvedOptions().timeZone,
         `${window.screen.width}x${window.screen.height}`
-      ].join("|");
+      ]
+      const fingerprint = fingerprintComponents.join("|")
 
       // Dynamic import to prevent server-side db code from being bundled into client
       const { submitDataReport } = await import("@/lib/server-functions/data-reports")
@@ -49,19 +50,17 @@ export function ReportButton({ indexId, year, indexName }: ReportButtonProps) {
         },
       })
 
-      if (result.success) {
-        if (result.alreadyReported) {
-          toast.info("Report Updated", {
-            description: result.message,
-          })
-        } else {
-          toast.success("Report Submitted", {
-            description: "Thank you for helping improve our data accuracy.",
-          })
-        }
-        setIsOpen(false)
-        setReason("")
+      if (result.alreadyReported) {
+        toast.info("Report Updated", {
+          description: result.message,
+        })
+      } else {
+        toast.success("Report Submitted", {
+          description: "Thank you for helping improve our data accuracy.",
+        })
       }
+      setIsOpen(false)
+      setReason("")
     } catch (error) {
         // Handle rate limit error or other errors
         let message = "Failed to submit report"

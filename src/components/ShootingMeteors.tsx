@@ -47,27 +47,25 @@ const Meteor = ({
   useEffect(() => {
     // Random chance to explode during the journey
     const shouldExplode = Math.random() < explosionChance
-    if (shouldExplode && !hasExploded) {
+    if (shouldExplode) {
       // Explode at a random point during the animation (between 20% and 80% of the journey)
       const explosionTiming = meteor.delay * 1000 + (meteor.duration * 1000 * (0.2 + Math.random() * 0.6))
       const timer = setTimeout(() => {
-        if (!hasExploded) {
-          setHasExploded(true)
-          // Calculate approximate position at explosion time
-          const progress = (0.2 + Math.random() * 0.6)
-          const startX = (meteor.left / 100) * window.innerWidth
-          const startY = (meteor.top / 100) * window.innerHeight
-          // Meteor moves diagonally down-right at 215 degrees
-          const distance = progress * 1500
-          const angle = (215 * Math.PI) / 180
-          const explosionX = startX + Math.cos(angle) * distance
-          const explosionY = startY - Math.sin(angle) * distance
-          onExplode(meteor.id, explosionX, explosionY)
-        }
+        setHasExploded(true)
+        // Calculate approximate position at explosion time
+        const progress = (0.2 + Math.random() * 0.6)
+        const startX = (meteor.left / 100) * window.innerWidth
+        const startY = (meteor.top / 100) * window.innerHeight
+        // Meteor moves diagonally down-right at 215 degrees
+        const distance = progress * 1500
+        const angle = (215 * Math.PI) / 180
+        const explosionX = startX + Math.cos(angle) * distance
+        const explosionY = startY - Math.sin(angle) * distance
+        onExplode(meteor.id, explosionX, explosionY)
       }, explosionTiming)
       return () => clearTimeout(timer)
     }
-  }, [meteor, hasExploded, onExplode, explosionChance])
+  }, [meteor, onExplode, explosionChance])
 
   if (hasExploded) {
     return null

@@ -41,13 +41,13 @@ const SKIP_CODES = new Set([
 ])
 
 interface IMFResponse {
-  values: {
+  values: Partial<{
     [indicator: string]: {
       [countryCode: string]: {
         [year: string]: number
       }
     }
-  }
+  }>
 }
 
 interface RankingEntry {
@@ -86,7 +86,7 @@ function processData(data: IMFResponse): Map<number, Array<RankingEntry>> {
 
   const indicatorData = data.values[INDICATOR]
 
-  if (!indicatorData) {
+  if (indicatorData === undefined) {
     throw new Error(`No data found for indicator ${INDICATOR}`)
   }
 
@@ -110,7 +110,7 @@ function processData(data: IMFResponse): Map<number, Array<RankingEntry>> {
       const year = parseInt(yearStr, 10)
 
       if (year < START_YEAR || year > END_YEAR) continue
-      if (value === null || value === undefined || isNaN(value)) continue
+      if (Number.isNaN(value)) continue
 
       // Round to 1 decimal place for cleaner data
       const score = Math.round(value * 10) / 10

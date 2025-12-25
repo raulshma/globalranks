@@ -46,14 +46,12 @@ export const ICON_MAP = {
   "🌱": IconPlant,
 } as const
 
-export type IconType = keyof typeof ICON_MAP
-
-interface DomainIconProps {
+export interface DomainIconProps {
   icon: string
   className?: string
 }
 
 export function DomainIcon({ icon, className }: DomainIconProps) {
-  const IconComponent = ICON_MAP[icon as IconType] || IconQuestionMark
-  return <IconComponent className={cn("size-6", className)} />
+  const Component = ICON_MAP[icon as keyof typeof ICON_MAP]
+  return <Component className={cn("size-6", className)} />
 }
