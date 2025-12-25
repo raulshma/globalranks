@@ -154,6 +154,7 @@ export function ShootingMeteors() {
             <Canvas
                 camera={{ position: [0, 0, 10], fov: 45 }}
                 gl={{ alpha: true, antialias: true }}
+                style={{ pointerEvents: 'none' }}
             >
                 <MeteorSpawner />
             </Canvas>
