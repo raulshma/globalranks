@@ -87,6 +87,27 @@ import { happyPlanetIndex, happyPlanetRankings, totalCountries as happyPlanetTot
 import { digitalCompetitivenessIndex, digitalCompetitivenessRankings, totalCountries as digitalCompetitivenessTotal } from './digital-competitiveness'
 import { entrepreneurshipIndex, entrepreneurshipRankings, totalCountries as entrepreneurshipTotal } from './entrepreneurship'
 
+// New indices - December 2025 (batch 4)
+import { englishProficiencyIndex, englishProficiencyRankings, totalCountries as englishProficiencyTotal } from './english-proficiency'
+import { pensionIndex, pensionRankings, totalCountries as pensionTotal } from './pension-index'
+import { womenPeaceSecurityIndex, womenPeaceSecurityRankings, totalCountries as wpsTotal } from './women-peace-security'
+import { eliteSportIndex, eliteSportRankings, totalCountries as eliteSportTotal } from './elite-sport'
+import { kidsRightsIndex, kidsRightsRankings, totalCountries as kidsRightsTotal } from './kidsrights-index'
+import { childClimateRiskIndex, childClimateRiskRankings, totalCountries as childClimateRiskTotal } from './child-climate-risk'
+
+// New indices - December 2025 (batch 5)
+import { globalKnowledgeIndex, globalKnowledgeRankings, totalCountries as globalKnowledgeTotal } from './global-knowledge'
+import { globalisationIndex, globalisationRankings, totalCountries as globalisationTotal } from './globalisation-index'
+import { climateRiskIndex, climateRiskRankings, totalCountries as climateRiskTotal } from './climate-risk'
+import { militaryExpenditureIndex, militaryExpenditureRankings, totalCountries as militaryExpenditureTotal } from './military-expenditure'
+import { hockeyRankingsIndex, hockeyRankings, totalCountries as hockeyTotal } from './hockey-rankings'
+import { cricketOdiRankingsIndex, cricketOdiRankings, totalCountries as cricketOdiTotal } from './cricket-odi-rankings'
+import { cricketT20RankingsIndex, cricketT20Rankings, totalCountries as cricketT20Total } from './cricket-t20-rankings'
+import { cricketTestRankingsIndex, cricketTestRankings, totalCountries as cricketTestTotal } from './cricket-test-rankings'
+import { chessCountryRankingsIndex, chessCountryRankings, totalCountries as chessCountryTotal } from './chess-country-rankings'
+import { lifeExpectancyIndex, lifeExpectancyRankings, totalCountries as lifeExpectancyTotal } from './life-expectancy'
+import { realGdpGrowthIndex, realGdpGrowthRankings, totalCountries as realGdpGrowthTotal } from './real-gdp-growth'
+
 // Re-export individual index data
 export { populationIndex, populationRankings } from './population'
 export { giiIndex, giiRankings } from './gii'
@@ -164,10 +185,31 @@ export { internetFreedomIndex, internetFreedomRankings } from './internet-freedo
 // New exports - December 2025 (batch 3)
 export { fdiConfidenceIndex, fdiConfidenceRankings } from './fdi-confidence'
 export { patentFilingsIndex, patentFilingsRankings } from './patent-filings'
-export { retailDevelopmentIndex, retailDevelopmentRankings } from './retail-development'
+export { retailDevelopmentIndex, retailDevelopmentRankings, retailDevelopmentRankings2017, retailDevelopmentRankings2019, retailDevelopmentRankings2023 } from './retail-development'
 export { happyPlanetIndex, happyPlanetRankings } from './happy-planet'
 export { digitalCompetitivenessIndex, digitalCompetitivenessRankings } from './digital-competitiveness'
 export { entrepreneurshipIndex, entrepreneurshipRankings } from './entrepreneurship'
+
+// New exports - December 2025 (batch 4)
+export { englishProficiencyIndex, englishProficiencyRankings } from './english-proficiency'
+export { pensionIndex, pensionRankings } from './pension-index'
+export { womenPeaceSecurityIndex, womenPeaceSecurityRankings } from './women-peace-security'
+export { eliteSportIndex, eliteSportRankings } from './elite-sport'
+export { kidsRightsIndex, kidsRightsRankings } from './kidsrights-index'
+export { childClimateRiskIndex, childClimateRiskRankings } from './child-climate-risk'
+
+// New exports - December 2025 (batch 5)
+export { globalKnowledgeIndex, globalKnowledgeRankings } from './global-knowledge'
+export { globalisationIndex, globalisationRankings } from './globalisation-index'
+export { climateRiskIndex, climateRiskRankings } from './climate-risk'
+export { militaryExpenditureIndex, militaryExpenditureRankings } from './military-expenditure'
+export { hockeyRankingsIndex, hockeyRankings } from './hockey-rankings'
+export { cricketOdiRankingsIndex, cricketOdiRankings } from './cricket-odi-rankings'
+export { cricketT20RankingsIndex, cricketT20Rankings } from './cricket-t20-rankings'
+export { cricketTestRankingsIndex, cricketTestRankings } from './cricket-test-rankings'
+export { chessCountryRankingsIndex, chessCountryRankings } from './chess-country-rankings'
+export { lifeExpectancyIndex, lifeExpectancyRankings } from './life-expectancy'
+export { realGdpGrowthIndex, realGdpGrowthRankings } from './real-gdp-growth'
 
 // All index metadata
 export const allIndices = [
@@ -247,6 +289,25 @@ export const allIndices = [
   happyPlanetIndex,
   digitalCompetitivenessIndex,
   entrepreneurshipIndex,
+  // New indices - December 2025 (batch 4)
+  englishProficiencyIndex,
+  pensionIndex,
+  womenPeaceSecurityIndex,
+  eliteSportIndex,
+  kidsRightsIndex,
+  childClimateRiskIndex,
+  // New indices - December 2025 (batch 5)
+  globalKnowledgeIndex,
+  globalisationIndex,
+  climateRiskIndex,
+  militaryExpenditureIndex,
+  hockeyRankingsIndex,
+  cricketOdiRankingsIndex,
+  cricketT20RankingsIndex,
+  cricketTestRankingsIndex,
+  chessCountryRankingsIndex,
+  lifeExpectancyIndex,
+  realGdpGrowthIndex,
 ]
 
 // All rankings data with their index info
@@ -327,4 +388,23 @@ export const allRankingsData = [
   { index: happyPlanetIndex, rankings: happyPlanetRankings, totalCountries: happyPlanetTotal, valueField: 'score' as const },
   { index: digitalCompetitivenessIndex, rankings: digitalCompetitivenessRankings, totalCountries: digitalCompetitivenessTotal, valueField: 'score' as const },
   { index: entrepreneurshipIndex, rankings: entrepreneurshipRankings, totalCountries: entrepreneurshipTotal, valueField: 'score' as const },
+  // New indices data - December 2025 (batch 4)
+  { index: englishProficiencyIndex, rankings: englishProficiencyRankings, totalCountries: englishProficiencyTotal, valueField: 'score' as const },
+  { index: pensionIndex, rankings: pensionRankings, totalCountries: pensionTotal, valueField: 'score' as const },
+  { index: womenPeaceSecurityIndex, rankings: womenPeaceSecurityRankings, totalCountries: wpsTotal, valueField: 'score' as const },
+  { index: eliteSportIndex, rankings: eliteSportRankings, totalCountries: eliteSportTotal, valueField: 'score' as const },
+  { index: kidsRightsIndex, rankings: kidsRightsRankings, totalCountries: kidsRightsTotal, valueField: 'score' as const },
+  { index: childClimateRiskIndex, rankings: childClimateRiskRankings, totalCountries: childClimateRiskTotal, valueField: 'score' as const },
+  // New indices data - December 2025 (batch 5)
+  { index: globalKnowledgeIndex, rankings: globalKnowledgeRankings, totalCountries: globalKnowledgeTotal, valueField: 'score' as const },
+  { index: globalisationIndex, rankings: globalisationRankings, totalCountries: globalisationTotal, valueField: 'score' as const },
+  { index: climateRiskIndex, rankings: climateRiskRankings, totalCountries: climateRiskTotal, valueField: 'score' as const },
+  { index: militaryExpenditureIndex, rankings: militaryExpenditureRankings, totalCountries: militaryExpenditureTotal, valueField: 'score' as const },
+  { index: hockeyRankingsIndex, rankings: hockeyRankings, totalCountries: hockeyTotal, valueField: 'score' as const },
+  { index: cricketOdiRankingsIndex, rankings: cricketOdiRankings, totalCountries: cricketOdiTotal, valueField: 'score' as const },
+  { index: cricketT20RankingsIndex, rankings: cricketT20Rankings, totalCountries: cricketT20Total, valueField: 'score' as const },
+  { index: cricketTestRankingsIndex, rankings: cricketTestRankings, totalCountries: cricketTestTotal, valueField: 'score' as const },
+  { index: chessCountryRankingsIndex, rankings: chessCountryRankings, totalCountries: chessCountryTotal, valueField: 'score' as const },
+  { index: lifeExpectancyIndex, rankings: lifeExpectancyRankings, totalCountries: lifeExpectancyTotal, valueField: 'score' as const },
+  { index: realGdpGrowthIndex, rankings: realGdpGrowthRankings, totalCountries: realGdpGrowthTotal, valueField: 'score' as const },
 ]
