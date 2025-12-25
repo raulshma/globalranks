@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 export const Retro3D = ({
   children,
   className,
-  depth = 10,
+  depth: _depth = 10,
 }: {
   children: React.ReactNode;
   className?: string;

@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router"
 import { IconChartBar } from "@tabler/icons-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { BackgroundToggle } from "@/components/background-toggle"
+import { SettingsPanel } from "@/components/settings-panel"
 import { MobileNavigation, Navigation } from "@/components/navigation"
 import { CountrySelector } from "@/components/country-selector"
 import { SkipLink } from "@/components/ui/skip-link"
@@ -60,6 +61,7 @@ export function Layout({ children, countries, selectedCountry }: LayoutProps) {
                 selectedCountry={selectedCountry}
               />
               <BackgroundToggle />
+              <SettingsPanel />
               <ThemeToggle />
             </div>
           </div>

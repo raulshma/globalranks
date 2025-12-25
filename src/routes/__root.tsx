@@ -14,6 +14,7 @@ import {
   BackgroundProvider,
   useBackground,
 } from '@/components/background-provider'
+import { SettingsProvider } from '@/components/settings-provider'
 import { Layout } from '@/components/layout'
 import { getAllCountries } from '@/lib/server-functions/countries'
 import { generateWebsiteJsonLd } from '@/lib/seo'
@@ -194,7 +195,7 @@ function BackgroundRenderer() {
     return (
       <>
         <BackgroundGradientAnimation />
-        <ShootingMeteors number={2} />
+        <ShootingMeteors />
       </>
     )
   }
@@ -202,7 +203,7 @@ function BackgroundRenderer() {
   return (
     <>
       <ThreeBackground />
-      <ShootingMeteors number={2} />
+      <ShootingMeteors />
     </>
   )
 }
@@ -216,16 +217,18 @@ function RootComponent() {
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="global-indicies-theme">
-      <BackgroundProvider
-        defaultBackground="3d"
-        storageKey="global-indicies-background"
-      >
-        <Layout countries={countries} selectedCountry={selectedCountry}>
-          <BackgroundRenderer />
-          <Outlet />
-          <Toaster />
-        </Layout>
-      </BackgroundProvider>
+      <SettingsProvider>
+        <BackgroundProvider
+          defaultBackground="3d"
+          storageKey="global-indicies-background"
+        >
+          <Layout countries={countries} selectedCountry={selectedCountry}>
+            <BackgroundRenderer />
+            <Outlet />
+            <Toaster />
+          </Layout>
+        </BackgroundProvider>
+      </SettingsProvider>
     </ThemeProvider>
   )
 }

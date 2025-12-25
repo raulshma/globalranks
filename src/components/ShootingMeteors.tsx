@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useSettings } from './settings-provider'
 
 interface MeteorState {
   id: number
@@ -10,6 +11,7 @@ interface MeteorState {
   duration: number
   isExploding: boolean
   explosionProgress: number
+  tailLength: number
 }
 
 interface ExplosionParticle {
@@ -26,18 +28,25 @@ const Meteor = ({
   meteor,
   onAnimationComplete,
   onExplode,
+  explosionChance,
   className,
 }: {
   meteor: MeteorState
   onAnimationComplete: (id: number) => void
   onExplode: (id: number, x: number, y: number) => void
+  explosionChance: number
   className?: string
 }) => {
   const [hasExploded, setHasExploded] = useState(false)
 
+  // Dynamic tail style based on settings - MUST be before any early returns
+  const tailStyle = useMemo(() => ({
+    '--tail-length': `${meteor.tailLength}px`,
+  } as React.CSSProperties), [meteor.tailLength])
+
   useEffect(() => {
-    // Random chance to explode during the journey (10% chance - rare event)
-    const shouldExplode = Math.random() < 0.1
+    // Random chance to explode during the journey
+    const shouldExplode = Math.random() < explosionChance
     if (shouldExplode && !hasExploded) {
       // Explode at a random point during the animation (between 20% and 80% of the journey)
       const explosionTiming = meteor.delay * 1000 + (meteor.duration * 1000 * (0.2 + Math.random() * 0.6))
@@ -58,7 +67,7 @@ const Meteor = ({
       }, explosionTiming)
       return () => clearTimeout(timer)
     }
-  }, [meteor, hasExploded, onExplode])
+  }, [meteor, hasExploded, onExplode, explosionChance])
 
   if (hasExploded) {
     return null
@@ -72,7 +81,7 @@ const Meteor = ({
       exit={{ opacity: 0 }}
       className={cn(
         'animate-meteor-effect absolute h-1 w-1 rounded-[9999px] bg-white shadow-[0_0_0_1px_#ffffff50] rotate-[15deg]',
-        "before:absolute before:top-1/2 before:h-px before:w-[200px] before:-translate-y-[50%] before:transform before:bg-linear-to-r before:from-white before:to-transparent before:content-['']",
+        "before:absolute before:top-1/2 before:h-px before:w-(--tail-length,200px) before:-translate-y-[50%] before:transform before:bg-linear-to-r before:from-white before:to-transparent before:content-['']",
         className,
       )}
       style={{
@@ -80,6 +89,7 @@ const Meteor = ({
         left: `${meteor.left}vw`,
         animationDelay: `${meteor.delay}s`,
         animationDuration: `${meteor.duration}s`,
+        ...tailStyle,
       }}
       onAnimationIteration={() => onAnimationComplete(meteor.id)}
     />
@@ -175,32 +185,48 @@ const ExplosionEffect = ({
 }
 
 export const ShootingMeteors = ({
-  number,
   className,
 }: {
-  number?: number
   className?: string
 }) => {
-  const meteorCount = number || 2
+  const { settings } = useSettings()
+  const meteorSettings = settings.meteors
+
+  // Return null if meteors are disabled
+  if (!meteorSettings.enabled) {
+    return null
+  }
+
+  const meteorCount = meteorSettings.count
 
   const generateMeteor = useCallback((id: number, initialDelay = 0): MeteorState => {
+    const delayRange = meteorSettings.maxDelay - meteorSettings.minDelay
+    const durationRange = meteorSettings.maxDuration - meteorSettings.minDuration
+    
     return {
       id,
       top: Math.floor(Math.random() * 30) - 20, // -20 to 10 vh (start above or near top)
       left: Math.floor(Math.random() * 80) + 10, // 10 to 90 vw
-      delay: initialDelay + 5 + Math.random() * 10, // 5-15s additional delay (less frequent)
-      duration: Math.floor(Math.random() * 3 + 2), // 2-5s duration
+      delay: initialDelay + meteorSettings.minDelay + Math.random() * delayRange,
+      duration: meteorSettings.minDuration + Math.random() * durationRange,
       isExploding: false,
       explosionProgress: 0,
+      tailLength: meteorSettings.tailLength,
     }
-  }, [])
+  }, [meteorSettings.minDelay, meteorSettings.maxDelay, meteorSettings.minDuration, meteorSettings.maxDuration, meteorSettings.tailLength])
 
   const [meteors, setMeteors] = useState<MeteorState[]>(() =>
-    Array.from({ length: meteorCount }, (_, idx) => generateMeteor(idx, idx * 8)) // 8s stagger between initial meteors
+    Array.from({ length: meteorCount }, (_, idx) => generateMeteor(idx, idx * 3))
   )
   const [explosions, setExplosions] = useState<ExplosionParticle[]>([])
   const [explosionGlows, setExplosionGlows] = useState<ExplosionGlow[]>([])
   const [meteorIdCounter, setMeteorIdCounter] = useState(meteorCount)
+
+  // Re-generate meteors when count changes
+  useEffect(() => {
+    setMeteors(Array.from({ length: meteorCount }, (_, idx) => generateMeteor(idx + meteorIdCounter, idx * 3)))
+    setMeteorIdCounter((prev) => prev + meteorCount)
+  }, [meteorCount])
 
   const handleAnimationComplete = useCallback((id: number) => {
     // Replace the completed meteor with a new one at a random position
@@ -264,6 +290,7 @@ export const ShootingMeteors = ({
               meteor={meteor}
               onAnimationComplete={handleAnimationComplete}
               onExplode={handleExplode}
+              explosionChance={meteorSettings.explosionChance}
               className={className}
             />
           ))}

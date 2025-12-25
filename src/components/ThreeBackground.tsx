@@ -3,6 +3,7 @@ import { Float, Environment, Torus, Cylinder, Sphere, Cone, Box, Icosahedron, Oc
 import { useRef, useEffect, useState } from "react"
 import * as THREE from "three"
 import { useTheme } from "./theme-provider"
+import { useSettings } from "./settings-provider"
 
 
 
@@ -47,7 +48,7 @@ function NatureSymbol({ position }: { position: [number, number, number] }) {
 
 function InnovationSymbol({ position }: { position: [number, number, number] }) {
     const ringsRef = useRef<THREE.Group>(null!)
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if (ringsRef.current) {
             ringsRef.current.rotation.x += delta * 0.2
             ringsRef.current.rotation.y += delta * 0.3
@@ -73,7 +74,7 @@ function InnovationSymbol({ position }: { position: [number, number, number] }) 
 
 function HealthSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if (group.current) group.current.rotation.z += delta * 0.2
     })
     return (
@@ -99,7 +100,7 @@ function HealthSymbol({ position }: { position: [number, number, number] }) {
 
 function EducationSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if(group.current) group.current.rotation.y += delta * 0.1
     })
     return (
@@ -120,7 +121,7 @@ function EducationSymbol({ position }: { position: [number, number, number] }) {
 
 function InfrastructureSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if(group.current) group.current.rotation.y -= delta * 0.15
     })
     return (
@@ -140,10 +141,10 @@ function InfrastructureSymbol({ position }: { position: [number, number, number]
 
 function PeaceSymbol({ position }: { position: [number, number, number] }) {
     const mesh = useRef<THREE.Mesh>(null!)
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if(mesh.current) {
             mesh.current.rotation.y += delta * 0.2
-            mesh.current.rotation.z = Math.sin(state.clock.elapsedTime) * 0.1
+            mesh.current.rotation.z = Math.sin(_state.clock.elapsedTime) * 0.1
         }
     })
     return (
@@ -182,7 +183,7 @@ function FreedomSymbol({ position }: { position: [number, number, number] }) {
 
 function SportsSymbol({ position }: { position: [number, number, number] }) {
     const ringRef = useRef<THREE.Mesh>(null!)
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if (ringRef.current) {
             ringRef.current.rotation.z += delta * 2
         }
@@ -210,7 +211,7 @@ function TechSymbol({ position }: { position: [number, number, number] }) {
     const outerRef = useRef<THREE.Mesh>(null!)
     const innerRef = useRef<THREE.Mesh>(null!)
     
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if(outerRef.current) outerRef.current.rotation.y += delta * 0.5
         if(innerRef.current) innerRef.current.rotation.y -= delta * 0.5
     })
@@ -231,7 +232,7 @@ function TechSymbol({ position }: { position: [number, number, number] }) {
 
 function LawSymbol({ position }: { position: [number, number, number] }) {
     const group = useRef<THREE.Group>(null!)
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if (group.current) group.current.rotation.y += delta * 0.2
     })
     return (
@@ -256,7 +257,7 @@ function EnergySymbol({ position }: { position: [number, number, number] }) {
     const crystalRef = useRef<THREE.Mesh>(null!)
     const ringRef = useRef<THREE.Mesh>(null!)
     
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if(crystalRef.current) {
             crystalRef.current.rotation.x += delta * 0.5
             crystalRef.current.rotation.z += delta * 0.5
@@ -287,7 +288,7 @@ function TravelSymbol({ position }: { position: [number, number, number] }) {
     const globeRef = useRef<THREE.Mesh>(null!)
     const orbitRef = useRef<THREE.Mesh>(null!)
 
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if(globeRef.current) globeRef.current.rotation.y += delta * 0.2
         if(orbitRef.current) orbitRef.current.rotation.z -= delta * 0.3
     })
@@ -344,14 +345,14 @@ function MediaSymbol({ position }: { position: [number, number, number] }) {
     )
 }
 
-function ParallaxGroup({ children }: { children: React.ReactNode }) {
+function ParallaxGroup({ children, intensity = 0.5 }: { children: React.ReactNode; intensity?: number }) {
     const group = useRef<THREE.Group>(null!)
     useFrame((state) => {
         if(group.current) {
             // Gentle parallax based on mouse position
             // Mouse x/y are from -1 to 1
-            const targetX = state.mouse.x * 0.5
-            const targetY = state.mouse.y * 0.5
+            const targetX = state.mouse.x * intensity
+            const targetY = state.mouse.y * intensity
             
             // Smoothly interpolate current rotation to target
             group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetY, 0.05)
@@ -363,6 +364,8 @@ function ParallaxGroup({ children }: { children: React.ReactNode }) {
 
 export function ThreeBackground() {
   const { theme } = useTheme()
+  const { settings } = useSettings()
+  const threeSettings = settings.threeBackground
   const [mounted, setMounted] = useState(false)
   
   // Resolve system theme
@@ -387,6 +390,8 @@ export function ThreeBackground() {
 
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) return null
+  
+  const { objectVisibility, starsEnabled, sparklesEnabled, sparkleCount, parallaxIntensity } = threeSettings
 
   const isDark = resolvedTheme === 'dark'
 
@@ -403,8 +408,7 @@ export function ThreeBackground() {
   const pointLightColor = isDark ? "#c084fc" : "#8b5cf6" // Purple-400 vs Violet-500
   const ambientIntensity = isDark ? 0.5 : 0.8
   
-  // Star colors need to be dark in light mode
-  const starOpacity = isDark ? 1 : 0.3
+  // Sparkle colors for theme
   const sparkleColor1 = isDark ? "#e2e8f0" : "#64748b"
   const sparkleColor2 = isDark ? "#38bdf8" : "#0284c7"
 
@@ -422,53 +426,57 @@ export function ThreeBackground() {
         <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} intensity={2} color={spotLightColor} />
         <pointLight position={[-10, -10, -10]} intensity={2} color={pointLightColor} />
         
-        <ParallaxGroup>
+        <ParallaxGroup intensity={parallaxIntensity}>
             {/* Economy - Top Left */}
-            <CoinStack position={[-5, 3, -2]} />
+            {objectVisibility.coinStack && <CoinStack position={[-5, 3, -2]} />}
             
             {/* Innovation - Top Right */}
-            <InnovationSymbol position={[5, 2.5, -3]} />
+            {objectVisibility.innovationSymbol && <InnovationSymbol position={[5, 2.5, -3]} />}
             
             {/* Environment - Bottom Left */}
-            <NatureSymbol position={[-4, -3, -1]} />
+            {objectVisibility.natureSymbol && <NatureSymbol position={[-4, -3, -1]} />}
             
             {/* Health - Center Left */}
-            <HealthSymbol position={[-2, 0, -5]} />
+            {objectVisibility.healthSymbol && <HealthSymbol position={[-2, 0, -5]} />}
             
             {/* Education - Bottom Right */}
-            <EducationSymbol position={[4, -3, -2]} />
+            {objectVisibility.educationSymbol && <EducationSymbol position={[4, -3, -2]} />}
             
             {/* Infrastructure - Top Center-Right */}
-            <InfrastructureSymbol position={[2, 4, -4]} />
+            {objectVisibility.infrastructureSymbol && <InfrastructureSymbol position={[2, 4, -4]} />}
             
             {/* Peace - Far Left */}
-            <PeaceSymbol position={[-7, -1, -6]} />
+            {objectVisibility.peaceSymbol && <PeaceSymbol position={[-7, -1, -6]} />}
             
             {/* Freedom - Far Right */}
-            <FreedomSymbol position={[7, 0, -5]} />
+            {objectVisibility.freedomSymbol && <FreedomSymbol position={[7, 0, -5]} />}
             
             {/* Sports - Bottom Center */}
-            <SportsSymbol position={[0, -3.5, -4]} />
+            {objectVisibility.sportsSymbol && <SportsSymbol position={[0, -3.5, -4]} />}
 
             {/* Tech - Top Far Left */}
-            <TechSymbol position={[-3, 5, -5]} />
+            {objectVisibility.techSymbol && <TechSymbol position={[-3, 5, -5]} />}
 
             {/* Law - Right Side */}
-            <LawSymbol position={[6, -2, -3]} />
+            {objectVisibility.lawSymbol && <LawSymbol position={[6, -2, -3]} />}
             
             {/* Energy - High Center */}
-            <EnergySymbol position={[0, 6, -6]} />
+            {objectVisibility.energySymbol && <EnergySymbol position={[0, 6, -6]} />}
 
             {/* Travel - Center Right */}
-            <TravelSymbol position={[3.5, 0.5, -4]} />
+            {objectVisibility.travelSymbol && <TravelSymbol position={[3.5, 0.5, -4]} />}
 
             {/* Media - Bottom Far Left */}
-            <MediaSymbol position={[-6, -4, -3]} />
+            {objectVisibility.mediaSymbol && <MediaSymbol position={[-6, -4, -3]} />}
             
-            {/* Modify star color for light mode via a prop isn't supported directly by Drei Stars efficiently, but we can lower transparency/fade or use Sparkles more */}
-            <Stars radius={50} depth={50} count={5000} factor={4} saturation={0} fade speed={1} /> 
-            <Sparkles count={150} scale={15} size={3} speed={0.4} opacity={0.5} color={sparkleColor1} />
-            <Sparkles count={50} scale={25} size={6} speed={0.2} opacity={0.2} color={sparkleColor2} />
+            {/* Stars and Sparkles based on settings */}
+            {starsEnabled && <Stars radius={50} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />}
+            {sparklesEnabled && (
+              <>
+                <Sparkles count={sparkleCount} scale={15} size={3} speed={0.4} opacity={0.5} color={sparkleColor1} />
+                <Sparkles count={Math.floor(sparkleCount / 3)} scale={25} size={6} speed={0.2} opacity={0.2} color={sparkleColor2} />
+              </>
+            )}
         </ParallaxGroup>
 
         <Environment preset="city" blur={1} />
