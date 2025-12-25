@@ -36,6 +36,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.1",
+    "framer-motion": "^12.23.26",
     "ioredis": "^5.8.2",
     "nitro": "latest",
     "react": "^19.2.3",
