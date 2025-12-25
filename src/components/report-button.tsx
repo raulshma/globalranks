@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { IconFlag, IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle, IconFlag } from "@tabler/icons-react"
 import { toast } from "sonner"
 import {
   AlertDialog,

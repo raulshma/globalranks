@@ -8,6 +8,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
+import { Toaster } from 'sonner'
 import appCss from '../styles.css?url'
 import { ThemeProvider } from '@/components/theme-provider'
 import {
@@ -21,7 +22,6 @@ import { generateWebsiteJsonLd } from '@/lib/seo'
 import { ThreeBackground } from '@/components/ThreeBackground'
 import { BackgroundGradientAnimation } from '@/components/background-gradient-animation'
 import { ShootingMeteors } from '@/components/ShootingMeteors'
-import { Toaster } from 'sonner'
 
 // Router context type
 export interface RouterContext {

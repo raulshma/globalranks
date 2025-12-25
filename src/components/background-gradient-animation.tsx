@@ -1,9 +1,9 @@
 "use client"
 
-import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
 import { useTheme } from "./theme-provider"
 import { useSettings } from "./settings-provider"
-import { useEffect, useState } from "react"
+import { cn } from "@/lib/utils"
 
 interface BackgroundGradientAnimationProps {
   gradientBackgroundStart?: string

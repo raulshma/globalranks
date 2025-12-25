@@ -8,8 +8,8 @@ import { z } from 'zod'
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '../db'
 import { countries, peerGroups, rankingEntries, rankingIndices } from '../db/schema'
+import { CACHE_TTL, cacheKey, withCache } from '../cache'
 import type { ComparisonDataPoint, GapAnalysis } from '../types'
-import { withCache, cacheKey, CACHE_TTL } from '../cache'
 
 /**
  * Compare multiple countries across all or selected indices

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { Link, createFileRoute } from "@tanstack/react-router"
 import { z } from "zod"
 import {
   IconArrowDown,
@@ -22,12 +22,12 @@ import { cn } from "@/lib/utils"
 import { generateBreadcrumbJsonLd, generateRankingIndexJsonLd } from "@/lib/seo"
 import { CACHE_CONFIG } from "@/lib/cache-config"
 
+import { LoadingGlow, LoadingGlowCard } from "@/components/loading-glow-card"
+
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
   year: z.coerce.number().optional(),
 })
-
-import { LoadingGlow, LoadingGlowCard } from "@/components/loading-glow-card"
 
 export const Route = createFileRoute("/rankings/$domain/$indexId")({
   validateSearch: searchSchema,

@@ -19,14 +19,14 @@ import { Badge } from "@/components/ui/badge"
 import { CustomIndexBuilder } from "@/components/custom-index-builder"
 import { CACHE_CONFIG } from "@/lib/cache-config"
 
+import { LoadingGlowCard } from "@/components/loading-glow-card"
+
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
 })
 
 // Temporary user ID for demo purposes
 const DEMO_USER_ID = "demo-user"
-
-import { LoadingGlowCard } from "@/components/loading-glow-card"
 
 export const Route = createFileRoute("/custom-index")({
   validateSearch: searchSchema,

@@ -6,8 +6,8 @@
  * Indicator: NGDP_RPCH (Real GDP growth, annual percent change)
  */
 
-import * as fs from 'fs'
-import * as path from 'path'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 
 // Configuration
 const IMF_API_BASE = 'https://www.imf.org/external/datamapper/api/v1'
@@ -81,8 +81,8 @@ async function fetchIMFData(): Promise<IMFResponse> {
   return data
 }
 
-function processData(data: IMFResponse): Map<number, RankingEntry[]> {
-  const yearData = new Map<number, RankingEntry[]>()
+function processData(data: IMFResponse): Map<number, Array<RankingEntry>> {
+  const yearData = new Map<number, Array<RankingEntry>>()
 
   const indicatorData = data.values[INDICATOR]
 
@@ -139,8 +139,8 @@ function processData(data: IMFResponse): Map<number, RankingEntry[]> {
   return yearData
 }
 
-function generateYearFile(year: number, entries: RankingEntry[]): string {
-  const lines: string[] = [
+function generateYearFile(year: number, entries: Array<RankingEntry>): string {
+  const lines: Array<string> = [
     '/**',
     ` * Real GDP Growth Rate ${year} - IMF Data`,
     ' * Source: IMF World Economic Outlook',
@@ -159,7 +159,7 @@ function generateYearFile(year: number, entries: RankingEntry[]): string {
   return lines.join('\n')
 }
 
-function generateIndexFile(years: number[]): string {
+function generateIndexFile(years: Array<number>): string {
   const imports = years
     .map((year) => `import { realGdpGrowthRankings${year} } from './${year}'`)
     .join('\n')
@@ -233,7 +233,7 @@ async function main() {
 
     // Generate year-specific files
     console.log('\n📝 Generating seed files...')
-    const generatedYears: number[] = []
+    const generatedYears: Array<number> = []
 
     for (const [year, entries] of yearData.entries()) {
       if (entries.length === 0) {

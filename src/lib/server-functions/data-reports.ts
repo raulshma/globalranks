@@ -3,12 +3,12 @@
  * Allows anonymous users to report incorrect data for indices
  */
 
-import { eq, and, sql } from 'drizzle-orm'
+import { and, eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '../db'
 import { dataReports, rankingIndices } from '../db/schema'
-import { createRateLimiter, createRateLimitError } from '../rate-limit'
+import { createRateLimitError, createRateLimiter } from '../rate-limit'
 
 // Rate limiter for reports: 5 reports per 10 minutes
 const reportRateLimiter = createRateLimiter({

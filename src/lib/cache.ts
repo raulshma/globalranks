@@ -24,7 +24,7 @@ export type CacheTTLType = keyof typeof CACHE_TTL
  * Generate a cache key from prefix and parts
  * @example cacheKey('dashboard', 'IND') => 'dashboard:IND'
  */
-export function cacheKey(prefix: string, ...parts: (string | number)[]): string {
+export function cacheKey(prefix: string, ...parts: Array<string | number>): string {
   return [prefix, ...parts].join(':')
 }
 

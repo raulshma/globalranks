@@ -10,7 +10,7 @@ import { setResponseHeader } from "@tanstack/react-start/server"
 import { db } from "../db"
 import { domains, rankingEntries } from "../db/schema"
 import { CDN_CACHE } from "../cache-config"
-import { withCache, cacheKey, CACHE_TTL } from "../cache"
+import { CACHE_TTL, cacheKey, withCache } from "../cache"
 
 /**
  * Get all domains with their indices and aggregate statistics

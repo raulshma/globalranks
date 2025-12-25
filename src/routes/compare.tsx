@@ -30,17 +30,17 @@ import { cn } from "@/lib/utils"
 import { generateComparisonJsonLd } from "@/lib/seo"
 import { CACHE_CONFIG } from "@/lib/cache-config"
 
+import { LoadingGlow } from "@/components/loading-glow-card"
+import { StatCardSkeleton } from "@/components/skeletons/stat-card-skeleton"
+import { ChartSkeleton } from "@/components/skeletons/chart-skeleton"
+import { TableSkeleton } from "@/components/skeletons/table-skeleton"
+
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
   compare: z.string().optional(), // Comma-separated country codes
   peerGroup: z.string().optional(),
   domain: z.string().optional(),
 })
-
-import { LoadingGlow } from "@/components/loading-glow-card"
-import { StatCardSkeleton } from "@/components/skeletons/stat-card-skeleton"
-import { ChartSkeleton } from "@/components/skeletons/chart-skeleton"
-import { TableSkeleton } from "@/components/skeletons/table-skeleton"
 
 export const Route = createFileRoute("/compare")({
   validateSearch: searchSchema,

@@ -1,7 +1,7 @@
-import { cn } from '@/lib/utils'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSettings } from './settings-provider'
+import { cn } from '@/lib/utils'
 
 interface MeteorState {
   id: number
@@ -108,8 +108,8 @@ const ExplosionEffect = ({
   glows,
   onComplete,
 }: {
-  particles: ExplosionParticle[]
-  glows: ExplosionGlow[]
+  particles: Array<ExplosionParticle>
+  glows: Array<ExplosionGlow>
   onComplete: (meteorId: number) => void
 }) => {
   useEffect(() => {
@@ -215,11 +215,11 @@ export const ShootingMeteors = ({
     }
   }, [meteorSettings.minDelay, meteorSettings.maxDelay, meteorSettings.minDuration, meteorSettings.maxDuration, meteorSettings.tailLength])
 
-  const [meteors, setMeteors] = useState<MeteorState[]>(() =>
+  const [meteors, setMeteors] = useState<Array<MeteorState>>(() =>
     Array.from({ length: meteorCount }, (_, idx) => generateMeteor(idx, idx * 3))
   )
-  const [explosions, setExplosions] = useState<ExplosionParticle[]>([])
-  const [explosionGlows, setExplosionGlows] = useState<ExplosionGlow[]>([])
+  const [explosions, setExplosions] = useState<Array<ExplosionParticle>>([])
+  const [explosionGlows, setExplosionGlows] = useState<Array<ExplosionGlow>>([])
   const [meteorIdCounter, setMeteorIdCounter] = useState(meteorCount)
 
   // Re-generate meteors when count changes
@@ -241,7 +241,7 @@ export const ShootingMeteors = ({
   const handleExplode = useCallback((meteorId: number, x: number, y: number) => {
     // Create explosion particles
     const particleCount = 8 + Math.floor(Math.random() * 8) // 8-15 particles
-    const newParticles: ExplosionParticle[] = Array.from({ length: particleCount }, (_, i) => ({
+    const newParticles: Array<ExplosionParticle> = Array.from({ length: particleCount }, (_, i) => ({
       id: Date.now() + i,
       meteorId,
       x,

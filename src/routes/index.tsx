@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { Link, createFileRoute } from "@tanstack/react-router"
 import { z } from "zod"
 import {
   IconArrowDown,
@@ -16,12 +16,12 @@ import { DomainIcon } from "@/components/domain-icon"
 import { cn } from "@/lib/utils"
 import { CACHE_CONFIG } from "@/lib/cache-config"
 
+import { LoadingGlow } from "@/components/loading-glow-card"
+import { BentoSkeleton } from "@/components/skeletons/bento-skeleton"
+
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
 })
-
-import { LoadingGlow } from "@/components/loading-glow-card"
-import { BentoSkeleton } from "@/components/skeletons/bento-skeleton"
 
 export const Route = createFileRoute("/")({
   validateSearch: searchSchema,

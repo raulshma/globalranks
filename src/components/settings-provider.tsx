@@ -1,12 +1,13 @@
 "use client"
 
 import * as React from "react"
-import {
+import type {
   BackgroundSettingsState,
-  defaultSettings,
-  ThreeBackgroundSettings,
   GradientSettings,
   MeteorSettings,
+  ThreeBackgroundSettings} from "@/lib/settings-types";
+import {
+  defaultSettings
 } from "@/lib/settings-types"
 
 const STORAGE_KEY = "global-indicies-settings"

@@ -1,18 +1,18 @@
 import {
-  IconCoin,
   IconBooks,
-  IconFirstAidKit,
-  IconBulb,
   IconBuildingMonument,
-  IconWorld,
   IconBuildingSkyscraper,
+  IconBulb,
+  IconCoin,
   IconCpu,
-  IconShieldHalf,
-  IconTrophy,
+  IconFirstAidKit,
   IconMoodSmile,
-  IconUsers,
   IconPlant,
   IconQuestionMark,
+  IconShieldHalf,
+  IconTrophy,
+  IconUsers,
+  IconWorld,
 } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
 

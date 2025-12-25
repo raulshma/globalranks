@@ -1,6 +1,6 @@
 "use client"
 
-import { IconSettings, IconRefresh, IconCube, IconWaveSine, IconMeteor } from "@tabler/icons-react"
+import { IconCube, IconMeteor, IconRefresh, IconSettings, IconWaveSine } from "@tabler/icons-react"
 import { useSettings } from "./settings-provider"
 import { useBackground } from "./background-provider"
 import { Button } from "./ui/button"

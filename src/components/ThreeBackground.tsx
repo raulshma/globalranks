@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber"
-import { Float, Environment, Torus, Cylinder, Sphere, Cone, Box, Icosahedron, Octahedron, Dodecahedron, Tetrahedron, Stars, Sparkles } from "@react-three/drei"
-import { useRef, useEffect, useState } from "react"
+import { Box, Cone, Cylinder, Dodecahedron, Environment, Float, Icosahedron, Octahedron, Sparkles, Sphere, Stars, Tetrahedron, Torus } from "@react-three/drei"
+import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { useTheme } from "./theme-provider"
 import { useSettings } from "./settings-provider"

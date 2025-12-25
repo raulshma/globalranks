@@ -26,14 +26,14 @@ import { DomainIcon } from "@/components/domain-icon"
 import { cn } from "@/lib/utils"
 import { CACHE_CONFIG } from "@/lib/cache-config"
 
+import { LoadingGlow } from "@/components/loading-glow-card"
+import { ChartSkeleton } from "@/components/skeletons/chart-skeleton"
+
 const searchSchema = z.object({
   country: z.string().length(3).optional().default("IND"),
   indices: z.string().optional(), // Comma-separated index IDs
   domain: z.string().optional(),
 })
-
-import { LoadingGlow } from "@/components/loading-glow-card"
-import { ChartSkeleton } from "@/components/skeletons/chart-skeleton"
 
 export const Route = createFileRoute("/trends")({
   validateSearch: searchSchema,
